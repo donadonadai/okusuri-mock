@@ -1,0 +1,1649 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>誤薬防止システム モックアップ</title>
+<style>
+  :root {
+    --stage: #F1F1EE;
+    --paper: #FFFFFF;
+    --soft: #FAFAF8;
+    --ink: #141916;
+    --sub: #6E7671;
+    --faint: #A2A9A4;
+    --brand: #0B6B4F;
+    --brand-deep: #095540;
+    --brand-wash: #F1F7F4;
+    --hair: #ECECE8;
+    --hair2: #DBDBD5;
+    --amber: #B47607;
+    --green: #0E8A45;
+    --red: #C43A3A;
+    --red-line: #E7CDCD;
+    --t-asa: #C2620A;
+    --t-hiru: #0369A1;
+    --t-yu: #B0491F;
+    --t-neru: #4338CA;
+    --radius: 10px;
+    font-variant-numeric: tabular-nums;
+  }
+  * { box-sizing: border-box; }
+  body, html { margin: 0; padding: 0; background: var(--stage); }
+  .app {
+    font-family: -apple-system, "SF Pro Text", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    color: var(--ink);
+    background: var(--stage);
+    min-height: 100vh;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  button { font-family: inherit; cursor: pointer; }
+  input, textarea, select { font-family: inherit; }
+
+  /* ---------- Demo shell (top bar) ---------- */
+  .topbar {
+    background: var(--paper);
+    color: var(--ink);
+    padding: 14px 20px 0;
+    position: sticky; top: 0; z-index: 40;
+    border-bottom: 1px solid var(--hair2);
+  }
+  .topbar-inner { max-width: 1080px; margin: 0 auto; }
+  .brandrow { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .brand-logo {
+    width: 28px; height: 28px; flex: none;
+    display: grid; place-items: center;
+    background: var(--brand); border-radius: 8px;
+  }
+  .brand-name { font-weight: 800; font-size: 15px; letter-spacing: .04em; }
+  .brand-mock {
+    font-size: 11px; color: var(--faint); letter-spacing: .02em;
+    margin-left: auto; white-space: nowrap;
+  }
+  .roletabs { display: flex; gap: 26px; margin-top: 6px; }
+  .roletab {
+    appearance: none; border: none; background: transparent;
+    color: var(--sub); font-size: 13.5px; font-weight: 700; letter-spacing: .03em;
+    padding: 10px 2px 12px; min-height: 44px;
+    border-bottom: 2px solid transparent; border-radius: 0;
+  }
+  .roletab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--brand); }
+
+  /* ---------- Staff app frame ---------- */
+  .stage { max-width: 1080px; margin: 0 auto; padding: 28px 20px 56px; }
+  .phone {
+    max-width: 400px; margin: 0 auto;
+    background: var(--paper);
+    border: 1px solid var(--hair2);
+    border-radius: 28px;
+    box-shadow: 0 24px 64px rgba(18,22,19,.10);
+    overflow: hidden;
+  }
+  @media (max-width: 480px) {
+    .stage { padding: 0 0 48px; }
+    .phone { max-width: none; border: none; border-radius: 0; box-shadow: none; min-height: calc(100vh - 92px); }
+    .pcard { border-left: none; border-right: none; border-radius: 0; box-shadow: none; }
+  }
+  .screen { display: none; }
+  .screen.active { display: block; animation: screenIn .14s ease; }
+  @keyframes screenIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .sc-head {
+    display: flex; align-items: center; gap: 10px;
+    padding: 22px 20px 12px;
+    min-height: 56px;
+  }
+  .sc-title { font-weight: 800; font-size: 21px; letter-spacing: .01em; line-height: 1.3; text-wrap: balance; }
+  .sc-sub { font-size: 12px; color: var(--sub); margin-top: 2px; letter-spacing: .02em; }
+  .backbtn {
+    appearance: none; border: none; background: transparent;
+    width: 40px; height: 40px; border-radius: 10px; flex: none; margin-left: -10px;
+    display: grid; place-items: center; color: var(--ink);
+  }
+  .backbtn:active { background: var(--soft); }
+  .sc-body { padding: 8px 20px 24px; }
+
+  /* ---------- Home: time-of-day rows ---------- */
+  .datechip {
+    font-size: 12px; color: var(--sub); margin: 4px 0 18px;
+    display: flex; align-items: baseline; gap: 8px;
+  }
+  .datechip b { color: var(--ink); font-size: 15px; font-weight: 800; letter-spacing: .02em; }
+  .todaydot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); flex: none; align-self: center; }
+
+  .slotgrid { display: flex; flex-direction: column; border-top: 1px solid var(--hair); }
+  .slot {
+    --slot: var(--brand);
+    appearance: none; text-align: left; background: transparent;
+    border: none; border-bottom: 1px solid var(--hair); border-radius: 0;
+    padding: 16px 2px 15px; display: block; width: 100%;
+    position: relative; color: var(--ink);
+  }
+  .slot:active { background: var(--soft); }
+  .slot-row { display: flex; align-items: center; gap: 12px; }
+  .slot-mark { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+  .slot-main { flex: 1; min-width: 0; }
+  .slot-name { font-weight: 800; font-size: 17.5px; letter-spacing: .01em; line-height: 1.3; }
+  .slot-time { font-size: 11px; color: var(--sub); margin-top: 1px; letter-spacing: .04em; }
+  .slot-stat { display: flex; align-items: baseline; gap: 5px; flex: none; }
+  .slot-stat b { font-size: 26px; font-weight: 800; letter-spacing: -.02em; line-height: 1; color: var(--ink); }
+  .slot-stat span { font-size: 11px; font-weight: 700; color: var(--amber); letter-spacing: .04em; }
+  .slot-stat.done { align-items: center; color: var(--green); gap: 4px; }
+  .slot-stat.done span { color: var(--green); }
+  .slot-foot { display: flex; align-items: center; gap: 10px; margin-top: 12px; padding-left: 20px; }
+  .slot-track { flex: 1; height: 3px; background: var(--hair); border-radius: 999px; overflow: hidden; }
+  .slot-track > i { display: block; height: 100%; background: var(--slot); border-radius: 999px; }
+  .slot-count { font-size: 11px; font-weight: 700; color: var(--sub); letter-spacing: .04em; flex: none; }
+
+  /* ---------- Resident list ---------- */
+  .listtools {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; padding: 2px 0 12px;
+  }
+  .listtools .count { font-size: 12px; font-weight: 700; color: var(--sub); letter-spacing: .03em; }
+  .toggle { display: inline-flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; color: var(--ink); user-select: none; cursor: pointer; }
+  .toggle input { position: absolute; opacity: 0; width: 0; height: 0; }
+  .switch {
+    width: 42px; height: 25px; border-radius: 999px; background: var(--hair2);
+    position: relative; transition: background .18s; flex: none;
+  }
+  .switch::after {
+    content: ""; position: absolute; top: 2px; left: 2px;
+    width: 21px; height: 21px; border-radius: 50%; background: #fff;
+    box-shadow: 0 1px 2px rgba(0,0,0,.25); transition: transform .18s;
+  }
+  .toggle input:checked + .switch { background: var(--brand); }
+  .toggle input:checked + .switch::after { transform: translateX(17px); }
+  .toggle input:focus-visible + .switch { outline: 2px solid var(--brand); outline-offset: 2px; }
+
+  .rlist { display: flex; flex-direction: column; border-top: 1px solid var(--hair); }
+  .ritem {
+    appearance: none; width: 100%; text-align: left; background: transparent;
+    border: none; border-bottom: 1px solid var(--hair); border-radius: 0;
+    padding: 12px 2px; display: flex; align-items: center; gap: 12px;
+    min-height: 64px; color: var(--ink);
+  }
+  .ritem:active { background: var(--soft); }
+  .avatar {
+    width: 40px; height: 40px; border-radius: 50%; flex: none;
+    display: grid; place-items: center; color: #fff; font-weight: 700; font-size: 16px;
+  }
+  .avatar.lg { width: 56px; height: 56px; font-size: 23px; }
+  .rinfo { flex: 1; min-width: 0; }
+  .rname { display: block; font-weight: 700; font-size: 15px; line-height: 1.35; }
+  .rmeta { display: block; font-size: 11.5px; color: var(--sub); margin-top: 1px; letter-spacing: .03em; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12.5px; font-weight: 700; letter-spacing: .02em;
+    white-space: nowrap; flex: none;
+  }
+  .chip::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; flex: none; }
+  .chip.done { color: var(--green); }
+  .chip.pend { color: var(--amber); }
+  .chip.refu { color: var(--red); }
+  .chevron { color: var(--hair2); flex: none; }
+
+  /* ---------- Record screen ---------- */
+  .confirm-card {
+    display: flex; align-items: center; gap: 16px;
+    padding: 6px 0 16px;
+  }
+  .confirm-info .cname { font-size: 26px; font-weight: 800; letter-spacing: .01em; line-height: 1.25; }
+  .confirm-info .cmeta { font-size: 12.5px; color: var(--sub); margin-top: 3px; letter-spacing: .02em; }
+  .confirm-note {
+    font-size: 12px; color: var(--sub); font-weight: 600;
+    padding: 10px 0 14px; margin-bottom: 6px;
+    border-bottom: 1px solid var(--hair);
+    display: flex; align-items: center; gap: 7px;
+  }
+  .confirm-note svg { color: var(--brand); flex: none; }
+  .slotpill {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12.5px; font-weight: 800; letter-spacing: .03em;
+    padding: 0; margin-top: 7px; background: none;
+  }
+  .slotpill::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; flex: none; }
+  .field { margin-bottom: 22px; }
+  .flabel {
+    font-size: 11px; font-weight: 800; letter-spacing: .09em; color: var(--sub);
+    margin-bottom: 9px; display: flex; align-items: center; gap: 6px;
+  }
+  .flabel .opt { font-weight: 600; color: var(--faint); font-size: 10.5px; letter-spacing: .05em; }
+  .segment { display: flex; gap: 8px; }
+  .segbtn {
+    flex: 1; appearance: none; background: var(--paper); border: 1px solid var(--hair2);
+    border-radius: var(--radius); padding: 10px 6px; min-height: 54px; color: var(--ink);
+    font-size: 14.5px; font-weight: 700; line-height: 1.25; text-align: center;
+  }
+  .segbtn small { display: block; font-weight: 600; font-size: 10px; color: var(--sub); margin-top: 2px; letter-spacing: .04em; }
+  .segbtn[aria-pressed="true"] {
+    border-color: var(--brand); background: var(--brand-wash); color: var(--brand-deep);
+    box-shadow: inset 0 0 0 1px var(--brand);
+  }
+  .segbtn[aria-pressed="true"] small { color: var(--brand); }
+
+  .photobtn {
+    appearance: none; width: 100%; background: var(--paper); border: 1px dashed var(--hair2);
+    border-radius: var(--radius); padding: 16px; min-height: 56px; color: var(--sub);
+    font-size: 13.5px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .photobtn:active { background: var(--soft); }
+  .thumbs { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+  .thumb {
+    width: 68px; height: 68px; border-radius: 8px; border: 1px solid #E0DBCA;
+    position: relative; overflow: hidden; flex: none;
+    background: repeating-linear-gradient(135deg, #F1ECDF 0 10px, #EAE3D2 10px 20px);
+  }
+  .thumb .pill {
+    position: absolute; inset: 14px 10px; border-radius: 20px/40px;
+    background: radial-gradient(circle at 40% 35%, #fff 0 30%, #F3F0E6 60%, #E4DDC8 100%);
+    border: 1px solid #CFC7AC;
+  }
+  .thumb .seam { position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: rgba(120,105,70,.3); }
+  .thumb .rm {
+    position: absolute; top: 3px; right: 3px; width: 20px; height: 20px; border-radius: 50%;
+    background: rgba(20,25,22,.78); color: #fff; border: none; font-size: 13px; line-height: 1;
+    display: grid; place-items: center;
+  }
+  textarea.comment {
+    width: 100%; border: 1px solid var(--hair2); border-radius: var(--radius); background: var(--paper);
+    padding: 11px 13px; font-size: 14px; resize: vertical; min-height: 64px; color: var(--ink);
+  }
+  textarea.comment:focus, .photobtn:focus-visible, .segbtn:focus-visible { outline: 2px solid var(--brand); outline-offset: 1px; }
+
+  .bigactions { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+  .btn-primary {
+    appearance: none; border: none; background: var(--brand); color: #fff;
+    border-radius: var(--radius); padding: 16px; min-height: 58px;
+    font-size: 16px; font-weight: 800; letter-spacing: .1em;
+  }
+  .btn-primary:active { background: var(--brand-deep); }
+  .btn-refuse {
+    appearance: none; background: var(--paper); color: var(--red); border: 1px solid var(--red-line);
+    border-radius: var(--radius); padding: 13px; min-height: 54px; font-size: 14.5px; font-weight: 700; letter-spacing: .04em;
+  }
+  .btn-refuse:active { background: #FBF3F3; }
+
+  .reasons { margin-top: 16px; display: none; }
+  .reasons.show { display: block; }
+  .reasons-head { font-size: 11px; font-weight: 800; letter-spacing: .09em; color: var(--red); margin-bottom: 9px; }
+  .reason-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .reasonbtn {
+    appearance: none; background: var(--paper); border: 1px solid var(--hair2);
+    border-radius: var(--radius); padding: 12px; min-height: 52px; font-size: 14px; font-weight: 700; color: var(--ink);
+  }
+  .reasonbtn:active, .reasonbtn.sel { border-color: var(--red); background: #FBF3F3; color: var(--red); }
+
+  /* ---------- Master ---------- */
+  .master-add {
+    appearance: none; width: 100%; background: var(--brand); color: #fff; border: none;
+    border-radius: var(--radius); padding: 13px; min-height: 52px; font-size: 14.5px; font-weight: 800; letter-spacing: .06em;
+    display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 18px;
+  }
+  .master-add:active { background: var(--brand-deep); }
+  .mform { display: none; background: var(--soft); border: 1px solid var(--hair); border-radius: 14px; padding: 16px; margin-bottom: 18px; }
+  .mform.show { display: block; }
+  .mform .field { margin-bottom: 14px; }
+  .mform input {
+    width: 100%; border: 1px solid var(--hair2); border-radius: var(--radius); background: #fff;
+    padding: 10px 13px; font-size: 14px; color: var(--ink); min-height: 46px;
+  }
+  .mform input:focus { outline: 2px solid var(--brand); outline-offset: 1px; }
+  .mform-actions { display: flex; gap: 8px; }
+  .btn-ghost {
+    appearance: none; flex: 1; background: #fff; border: 1px solid var(--hair2);
+    border-radius: var(--radius); padding: 11px; min-height: 48px; font-size: 14px; font-weight: 700; color: var(--ink);
+  }
+  .btn-ghost:active { background: var(--soft); }
+  .btn-save {
+    flex: 1; appearance: none; background: var(--brand); color: #fff; border: none;
+    border-radius: var(--radius); padding: 11px; min-height: 48px; font-size: 14px; font-weight: 800; letter-spacing: .04em;
+  }
+  .btn-save:active { background: var(--brand-deep); }
+  .mlist { display: flex; flex-direction: column; border-top: 1px solid var(--hair); }
+  .mrow {
+    background: transparent; border: none; border-bottom: 1px solid var(--hair); border-radius: 0;
+    padding: 12px 2px; display: flex; align-items: center; gap: 12px; color: var(--ink);
+  }
+  .mrow .mnote { display: block; font-size: 11px; color: var(--amber); font-weight: 700; margin-top: 2px; letter-spacing: .02em; }
+  .mrow.tappable { appearance: none; width: 100%; text-align: left; }
+  .mrow.tappable:active { background: var(--soft); }
+  .refdots { display: inline-flex; gap: 4px; margin-top: 5px; }
+  .refdot { width: 7px; height: 7px; border-radius: 50%; flex: none; }
+
+  .facefoot { font-size: 11px; color: var(--faint); margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--hair); letter-spacing: .02em; }
+
+  /* ---------- Reference-meds panel (record screen) ---------- */
+  .refpanel {
+    border: 1px solid var(--hair); border-radius: 14px;
+    padding: 14px 15px 15px; margin-bottom: 22px; background: var(--soft);
+  }
+  .refpanel-head {
+    font-size: 11px; font-weight: 800; letter-spacing: .09em; color: var(--ink);
+    display: flex; align-items: center; gap: 7px; margin-bottom: 12px;
+  }
+  .refpanel-head svg { color: var(--brand); }
+  .refpanel-body { display: flex; align-items: flex-start; gap: 12px; }
+  .refphoto {
+    width: 104px; height: 104px; border-radius: 10px; border: 1px solid #E0DBCA;
+    position: relative; overflow: hidden; flex: none;
+    background: repeating-linear-gradient(135deg, #F1ECDF 0 12px, #EAE3D2 12px 24px);
+  }
+  .refphoto .pill {
+    position: absolute; inset: 24px 18px; border-radius: 24px/48px;
+    background: radial-gradient(circle at 40% 35%, #fff 0 30%, #F3F0E6 60%, #E4DDC8 100%);
+    border: 1px solid #CFC7AC;
+  }
+  .refphoto .seam { position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: rgba(120,105,70,.3); }
+  .refphoto.empty {
+    background: var(--paper); border: 1px dashed var(--hair2);
+    display: grid; place-items: center; color: var(--faint);
+  }
+  .refphoto.empty svg { opacity: .8; }
+  .refinfo { flex: 1; min-width: 0; }
+  .refnote { font-size: 13.5px; font-weight: 700; color: var(--ink); line-height: 1.45; }
+  .refupdated { font-size: 11px; color: var(--sub); margin-top: 6px; letter-spacing: .03em; }
+  .refhint { font-size: 11.5px; color: var(--sub); font-weight: 600; margin-top: 10px; display: flex; align-items: flex-start; gap: 6px; }
+  .refhint svg { color: var(--brand); flex: none; margin-top: 1px; }
+  .refempty-title { font-size: 13.5px; font-weight: 700; color: var(--sub); }
+  .reflink {
+    appearance: none; background: none; border: none; padding: 6px 0 0; margin: 0;
+    color: var(--brand); font-size: 12.5px; font-weight: 700; text-align: left;
+    text-decoration: underline; text-underline-offset: 3px; cursor: pointer;
+  }
+
+  /* ---------- Master detail (sc-mdetail) ---------- */
+  .mdetail-hero {
+    display: flex; align-items: center; gap: 15px;
+    padding: 6px 20px 18px; border-bottom: 1px solid var(--hair);
+  }
+  .mdetail-hero .cname { font-size: 22px; font-weight: 800; letter-spacing: .01em; }
+  .mdetail-hero .cmeta { font-size: 12.5px; color: var(--sub); margin-top: 2px; letter-spacing: .02em; }
+  .mdetail-hero .cnote { font-size: 12px; color: var(--amber); font-weight: 700; margin-top: 3px; }
+  .refsec-title { font-size: 11px; font-weight: 800; letter-spacing: .09em; color: var(--sub); margin: 14px 0 3px; }
+  .refsec-sub { font-size: 12px; color: var(--sub); margin-bottom: 14px; }
+  .refrow { display: block; padding: 16px 0 15px; border-bottom: 1px solid var(--hair); }
+  .refrow:last-of-type { border-bottom: none; }
+  .refrow.off { opacity: .42; }
+  .refrow-slot { display: flex; align-items: center; gap: 8px; flex: none; }
+  .refrow-mark { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+  .refrow-slotname { font-size: 15px; font-weight: 800; letter-spacing: .01em; }
+  .refthumb {
+    width: 72px; height: 72px; border-radius: 9px; border: 1px solid #E0DBCA;
+    position: relative; overflow: hidden; flex: none;
+    background: repeating-linear-gradient(135deg, #F1ECDF 0 11px, #EAE3D2 11px 22px);
+  }
+  .refthumb .pill {
+    position: absolute; inset: 16px 12px; border-radius: 18px/34px;
+    background: radial-gradient(circle at 40% 35%, #fff 0 30%, #F3F0E6 60%, #E4DDC8 100%);
+    border: 1px solid #CFC7AC;
+  }
+  .refthumb .seam { position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: rgba(120,105,70,.3); }
+  .refthumb.empty { background: var(--paper); border: 1px dashed var(--hair2); display: grid; place-items: center; color: var(--faint); }
+  .refrow-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+  .refrow-note {
+    width: 100%; border: 1px solid var(--hair2); border-radius: 8px;
+    padding: 8px 11px; font-size: 13.5px; color: var(--ink); min-height: 40px;
+  }
+  .refrow-note:focus { outline: 2px solid var(--brand); outline-offset: 1px; }
+  .refrow-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .refrow-updated { font-size: 11px; color: var(--sub); margin-right: auto; }
+  .btn-shoot {
+    appearance: none; background: var(--paper); border: 1px solid var(--hair2); border-radius: 8px;
+    padding: 8px 12px; min-height: 40px; font-size: 13px; font-weight: 700; color: var(--brand-deep);
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .btn-shoot:active { background: var(--brand-wash); }
+  .btn-del {
+    appearance: none; background: var(--paper); border: 1px solid var(--red-line); border-radius: 8px;
+    padding: 8px 10px; min-height: 40px; font-size: 12.5px; font-weight: 700; color: var(--red);
+  }
+  .btn-del:active { background: #FBF3F3; }
+  .refsec-foot { font-size: 11px; color: var(--faint); margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--hair); letter-spacing: .02em; }
+
+  /* ---------- Timing chip (食前/食後 etc.) ---------- */
+  .tchip {
+    display: inline-flex; align-items: center;
+    font-size: 10.5px; font-weight: 800; line-height: 1; letter-spacing: .08em;
+    padding: 4px 7px; border-radius: 4px;
+    border: 1px solid var(--brand); color: var(--brand-deep);
+    background: var(--paper); white-space: nowrap;
+  }
+  .tchip.none { border-color: var(--hair2); color: var(--sub); }
+
+  /* ---------- Master detail: schedule row + sample list ---------- */
+  .refrow-head { display: flex; align-items: center; gap: 10px; }
+  .refrow-headmain { flex: 1; min-width: 0; }
+  .schedtoggle { display: inline-flex; align-items: center; gap: 8px; flex: none; cursor: pointer; user-select: none; }
+  .schedtoggle .lbl { font-size: 11px; font-weight: 700; color: var(--sub); letter-spacing: .06em; }
+  .schedtoggle input { position: absolute; opacity: 0; width: 0; height: 0; }
+  .schedtoggle input:focus-visible + .switch { outline: 2px solid var(--brand); outline-offset: 2px; }
+  .schedtoggle input:checked + .switch { background: var(--brand); }
+  .schedtoggle input:checked + .switch::after { transform: translateX(17px); }
+  .refrow-body { margin-top: 12px; }
+  .refrow-body.hidden { display: none; }
+  .samplelist { display: flex; flex-direction: column; gap: 10px; }
+  .sampleitem {
+    display: flex; align-items: flex-start; gap: 12px;
+    background: var(--paper); border: 1px solid var(--hair); border-radius: 12px; padding: 9px;
+  }
+  .sampleitem .refthumb { width: 58px; height: 58px; border-radius: 7px; }
+  .sampleitem .refthumb .pill { inset: 13px 10px; border-radius: 16px/30px; }
+  .sample-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 5px; padding-top: 3px; }
+  .sample-note { font-size: 13.5px; color: var(--ink); font-weight: 700; line-height: 1.4; }
+  .sample-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .sample-updated { font-size: 11px; color: var(--sub); letter-spacing: .03em; }
+  .sample-del {
+    appearance: none; background: transparent; border: none; border-radius: 8px;
+    padding: 6px 8px; min-height: 40px; font-size: 12px; font-weight: 700; color: var(--red); flex: none;
+    text-decoration: underline; text-underline-offset: 3px;
+  }
+  .sample-del:active { background: #FBF3F3; }
+  .sample-empty { font-size: 12.5px; color: var(--faint); padding: 2px 0; }
+  .btn-addshoot {
+    appearance: none; margin-top: 10px; background: var(--paper); border: 1px dashed var(--hair2);
+    border-radius: var(--radius); padding: 10px 12px; min-height: 46px; width: 100%;
+    font-size: 13px; font-weight: 700; color: var(--brand-deep);
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .btn-addshoot:active { background: var(--brand-wash); }
+
+  /* mini shoot form */
+  .shootform { display: none; margin-top: 10px; background: var(--soft); border: 1px solid var(--hair); border-radius: 12px; padding: 14px; }
+  .shootform.show { display: block; }
+  .shootform .sflabel { font-size: 10.5px; font-weight: 800; letter-spacing: .09em; color: var(--sub); margin-bottom: 7px; }
+  .timingseg { display: flex; gap: 6px; margin-bottom: 13px; flex-wrap: wrap; }
+  .timingbtn {
+    flex: 1; min-width: 64px; appearance: none; background: #fff; border: 1px solid var(--hair2);
+    border-radius: 8px; padding: 8px 4px; min-height: 42px; color: var(--ink);
+    font-size: 13px; font-weight: 700; text-align: center;
+  }
+  .timingbtn[aria-pressed="true"] { border-color: var(--brand); background: var(--brand-wash); color: var(--brand-deep); box-shadow: inset 0 0 0 1px var(--brand); }
+  .shootform input.sf-note {
+    width: 100%; border: 1px solid var(--hair2); border-radius: 8px; background: #fff;
+    padding: 9px 12px; font-size: 13.5px; color: var(--ink); min-height: 44px; margin-bottom: 13px;
+  }
+  .shootform input.sf-note:focus, .timingbtn:focus-visible { outline: 2px solid var(--brand); outline-offset: 1px; }
+  .shootform-actions { display: flex; gap: 8px; }
+  .btn-shootgo {
+    flex: 1; appearance: none; background: var(--brand); color: #fff; border: none;
+    border-radius: 8px; padding: 10px; min-height: 46px; font-size: 13.5px; font-weight: 800; letter-spacing: .04em;
+  }
+  .btn-shootgo:active { background: var(--brand-deep); }
+
+  /* ---------- Record screen: multi-sample panel ---------- */
+  .refsamples { display: flex; gap: 14px; overflow-x: auto; padding-bottom: 4px; }
+  .refsample { flex: none; width: 112px; }
+  .refsample .refphoto { width: 112px; height: 100px; }
+  .refsample-note { font-size: 12px; color: var(--ink); font-weight: 700; margin-top: 6px; line-height: 1.4; }
+  .refsample-chip { margin-top: 7px; }
+
+  /* ---------- Add form: schedule checkboxes ---------- */
+  .schedchecks { display: flex; gap: 8px; flex-wrap: wrap; }
+  .schedcheck {
+    display: inline-flex; align-items: center; gap: 7px; cursor: pointer; user-select: none;
+    border: 1px solid var(--hair2); border-radius: var(--radius); padding: 8px 13px; min-height: 46px;
+    font-size: 13.5px; font-weight: 700; color: var(--ink); background: #fff;
+  }
+  .schedcheck input { width: 17px; height: 17px; accent-color: var(--brand); }
+  .schedcheck.on { border-color: var(--brand); background: var(--brand-wash); color: var(--brand-deep); }
+
+  /* ---------- Bottom nav ---------- */
+  .bottomnav {
+    display: flex; border-top: 1px solid var(--hair); background: var(--paper);
+    padding: 4px 8px 8px;
+  }
+  .navbtn {
+    flex: 1; appearance: none; border: none; background: transparent; color: var(--faint);
+    padding: 9px 4px 8px; min-height: 54px; font-size: 10.5px; font-weight: 700; letter-spacing: .06em;
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+  }
+  .navbtn svg { display: block; }
+  .navbtn[aria-current="true"] { color: var(--brand); }
+  .navbtn:active { color: var(--brand-deep); }
+
+  /* ---------- Pharmacy ---------- */
+  .pharma { display: none; }
+  .pharma.active { display: block; animation: screenIn .14s ease; }
+  .pcard {
+    background: var(--paper); border: 1px solid var(--hair2); border-radius: 16px;
+    box-shadow: 0 16px 48px rgba(18,22,19,.07);
+    overflow: hidden;
+  }
+  .pharma-head { padding: 24px 26px 18px; }
+  .pharma-title { font-size: 22px; font-weight: 800; letter-spacing: .01em; }
+  .pharma-sub { font-size: 12.5px; color: var(--sub); margin-top: 3px; letter-spacing: .02em; }
+
+  .filters {
+    display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-end;
+    padding: 4px 26px 18px; border-bottom: 1px solid var(--hair);
+  }
+  .fgroup { display: flex; flex-direction: column; gap: 5px; }
+  .fgroup label { font-size: 10.5px; font-weight: 800; letter-spacing: .09em; color: var(--sub); }
+  .fgroup select, .fgroup input {
+    border: 1px solid var(--hair2); border-radius: 8px; padding: 9px 12px;
+    font-size: 13.5px; color: var(--ink); background: #fff; min-height: 40px;
+  }
+  .fgroup select:focus, .fgroup input:focus { outline: 2px solid var(--brand); outline-offset: 1px; }
+  .copybtn {
+    margin-left: auto; appearance: none; background: var(--brand); color: #fff; border: none;
+    border-radius: 8px; padding: 10px 18px; min-height: 42px; font-size: 13.5px; font-weight: 800; letter-spacing: .04em;
+    display: inline-flex; align-items: center; gap: 8px; align-self: flex-end;
+  }
+  .copybtn:active { background: var(--brand-deep); }
+
+  .summary { display: flex; flex-wrap: wrap; padding: 18px 26px; border-bottom: 1px solid var(--hair); }
+  .stat { padding: 2px 32px 2px 0; margin-right: 32px; border-right: 1px solid var(--hair); }
+  .stat:last-child { border-right: none; margin-right: 0; }
+  .stat .n { font-size: 30px; font-weight: 800; line-height: 1.15; letter-spacing: -.02em; }
+  .stat .l { font-size: 10.5px; font-weight: 700; color: var(--sub); margin-top: 2px; letter-spacing: .08em; }
+  .stat.good .n { color: var(--green); }
+  .stat.warn .n { color: var(--red); }
+
+  .tablewrap { overflow-x: auto; }
+  table.ptable { width: 100%; border-collapse: collapse; min-width: 760px; }
+  .ptable thead th {
+    text-align: left; font-size: 10.5px; font-weight: 800; color: var(--sub);
+    letter-spacing: .09em; padding: 12px 16px; border-bottom: 1px solid var(--hair2);
+    white-space: nowrap; background: var(--paper);
+  }
+  .ptable tbody td { padding: 12px 16px; border-bottom: 1px solid var(--hair); font-size: 13.5px; vertical-align: middle; }
+  .ptable tbody tr { cursor: pointer; }
+  .ptable tbody tr:hover { background: var(--soft); }
+  .ptable td.time { font-variant-numeric: tabular-nums; color: var(--sub); }
+  .ptable .rname-cell { display: flex; align-items: center; gap: 10px; font-weight: 700; }
+  .ptable .avatar { width: 28px; height: 28px; font-size: 12px; }
+  .stripe-refu td:first-child { box-shadow: inset 3px 0 0 var(--red); }
+  .stripe-pend td:first-child { box-shadow: inset 3px 0 0 var(--amber); }
+  .slot-tag { font-size: 12px; font-weight: 800; letter-spacing: .04em; }
+  .cmt-cell { max-width: 200px; color: var(--sub); font-size: 12.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .photo-yes { color: var(--brand); display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 700; }
+  .photo-no { color: var(--faint); font-size: 12px; }
+
+  /* ---------- Detail modal / toast ---------- */
+  .overlay {
+    position: fixed; inset: 0; background: rgba(15,18,16,.44); z-index: 60;
+    display: none; align-items: flex-end; justify-content: center; padding: 0;
+  }
+  .overlay.show { display: flex; }
+  @media (min-width: 560px) { .overlay { align-items: center; padding: 20px; } }
+  .modal {
+    background: #fff; width: 100%; max-width: 430px; border-radius: 18px 18px 0 0;
+    max-height: 90vh; overflow-y: auto;
+    animation: modalIn .18s ease;
+  }
+  @keyframes modalIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+  @media (min-width: 560px) { .modal { border-radius: 18px; } }
+  .modal-head { padding: 18px 20px; border-bottom: 1px solid var(--hair); display: flex; align-items: center; gap: 13px; }
+  .modal-head .cname { font-size: 17.5px; font-weight: 800; }
+  .modal-head .cmeta { font-size: 12px; color: var(--sub); letter-spacing: .02em; }
+  .modal-close { margin-left: auto; appearance: none; border: none; background: var(--soft); width: 36px; height: 36px; border-radius: 50%; font-size: 16px; color: var(--ink); }
+  .modal-close:active { background: var(--hair); }
+  .modal-body { padding: 20px; }
+  .dl { display: grid; grid-template-columns: auto 1fr; gap: 12px 20px; font-size: 13.5px; }
+  .dl dt { color: var(--sub); font-weight: 700; font-size: 11px; letter-spacing: .07em; padding-top: 3px; }
+  .dl dd { margin: 0; font-weight: 600; }
+  .detail-photo {
+    margin-top: 18px; height: 150px; border-radius: 12px; border: 1px solid #E0DBCA;
+    background: repeating-linear-gradient(135deg, #F1ECDF 0 14px, #EAE3D2 14px 28px);
+    position: relative; display: grid; place-items: center;
+  }
+  .detail-photo .plabel { font-size: 11.5px; font-weight: 600; color: #8a7f5f; background: rgba(255,255,255,.82); padding: 4px 11px; border-radius: 999px; }
+  .detail-photo .pill2 {
+    position: absolute; width: 120px; height: 66px; border-radius: 34px;
+    background: radial-gradient(circle at 42% 34%, #fff 0 28%, #F3F0E6 62%, #E1D9C1 100%);
+    border: 1px solid #CFC7AC;
+  }
+
+  .toast {
+    position: fixed; left: 50%; bottom: 26px; transform: translate(-50%, 16px);
+    background: var(--ink); color: #fff; padding: 13px 18px; border-radius: 10px;
+    font-size: 13.5px; font-weight: 700; z-index: 80; letter-spacing: .02em;
+    box-shadow: 0 10px 30px rgba(10,14,12,.35);
+    opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s;
+    display: flex; align-items: center; gap: 9px; max-width: 92vw;
+  }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+  .toast .check { color: #58C98F; flex: none; }
+  .toast .meta { color: #A9B3AD; font-weight: 500; font-size: 12px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+</style>
+</head>
+<body>
+
+
+<div class="app">
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brandrow">
+        <span class="brand-logo" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 20.5 3.5 13.5a5 5 0 0 1 7-7l7 7a5 5 0 0 1-7 7Z"/><path d="M8.5 8.5l7 7"/></svg>
+        </span>
+        <span class="brand-name">おくすり記録</span>
+        <span class="brand-mock">モックアップ（デモデータで動作します）</span>
+      </div>
+      <div class="roletabs" role="tablist" aria-label="表示の切替">
+        <button class="roletab" role="tab" aria-selected="true" id="tab-staff" onclick="setRole('staff')">施設スタッフ</button>
+        <button class="roletab" role="tab" aria-selected="false" id="tab-pharma" onclick="setRole('pharma')">薬局</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage">
+    <!-- ============ STAFF SIDE ============ -->
+    <div class="phone" id="staffPane">
+
+      <!-- Screen 1: Home -->
+      <section class="screen active" id="sc-home">
+        <div class="sc-head">
+          <div>
+            <div class="sc-title">今日の服薬</div>
+            <div class="sc-sub">さくら苑</div>
+          </div>
+        </div>
+        <div class="sc-body">
+          <p class="datechip"><span class="todaydot"></span><b>2026年7月3日（金）</b></p>
+          <div class="slotgrid" id="slotGrid"><!-- filled by JS --></div>
+        </div>
+        <nav class="bottomnav">
+          <button class="navbtn" aria-current="true" onclick="go('home')">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>
+            服薬記録
+          </button>
+          <button class="navbtn" onclick="go('master')">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.2"/><path d="M5 20a7 7 0 0 1 14 0"/></svg>
+            入居者
+          </button>
+        </nav>
+      </section>
+
+      <!-- Screen 2: Resident list -->
+      <section class="screen" id="sc-list">
+        <div class="sc-head">
+          <button class="backbtn" onclick="go('home')" aria-label="戻る">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+          </button>
+          <div>
+            <div class="sc-title" id="listTitle">朝の服薬</div>
+            <div class="sc-sub" id="listSub">7:00 - 9:00 ・ 12名</div>
+          </div>
+        </div>
+        <div class="sc-body">
+          <div class="listtools">
+            <span class="count" id="listCount"></span>
+            <label class="toggle">
+              <input type="checkbox" id="pendOnly" onchange="renderList()">
+              <span class="switch"></span>
+              未実施のみ表示
+            </label>
+          </div>
+          <div class="rlist" id="residentList"></div>
+        </div>
+      </section>
+
+      <!-- Screen 3: Record -->
+      <section class="screen" id="sc-record">
+        <div class="sc-head">
+          <button class="backbtn" onclick="go('list')" aria-label="一覧に戻る">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+          </button>
+          <div class="sc-title">服薬の記録</div>
+        </div>
+        <div class="sc-body">
+          <div class="confirm-card">
+            <div class="avatar lg" id="recAvatar"></div>
+            <div class="confirm-info">
+              <div class="cname" id="recName"></div>
+              <div class="cmeta" id="recMeta"></div>
+              <span class="slotpill" id="recSlotPill"></span>
+            </div>
+          </div>
+          <p class="confirm-note">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16h.01"/></svg>
+            お名前と顔写真を確認してください
+          </p>
+
+          <div class="refpanel" id="recRefPanel">
+            <div class="refpanel-head">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M8 4v5"/></svg>
+            </div>
+            <div class="refpanel-body" id="recRefBody"></div>
+          </div>
+
+          <div class="field">
+            <div class="flabel">実施者</div>
+            <div class="segment" id="staffSeg">
+              <button class="segbtn" aria-pressed="true" onclick="pickStaff(this,'佐藤')">佐藤<small>看護師</small></button>
+              <button class="segbtn" aria-pressed="false" onclick="pickStaff(this,'田村')">田村<small>介護士</small></button>
+              <button class="segbtn" aria-pressed="false" onclick="pickStaff(this,'山下')">山下<small>介護士</small></button>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="flabel">薬包・服薬場面を撮影 <span class="opt">任意</span></div>
+            <button class="photobtn" id="photoBtn" onclick="addPhoto()">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.4"/></svg>
+              写真を追加
+            </button>
+            <div class="thumbs" id="thumbs"></div>
+          </div>
+
+          <div class="field">
+            <div class="flabel">コメント <span class="opt">任意</span></div>
+            <textarea class="comment" id="recComment" placeholder="例：むせ込みなし"></textarea>
+          </div>
+
+          <div class="bigactions">
+            <button class="btn-primary" onclick="recordTaken()">服薬を記録する</button>
+            <button class="btn-refuse" onclick="toggleReasons()">飲めなかった／拒否</button>
+          </div>
+
+          <div class="reasons" id="reasons">
+            <div class="reasons-head">理由を選んでください</div>
+            <div class="reason-grid" id="reasonGrid">
+              <button class="reasonbtn" onclick="recordRefused('拒否', this)">拒否</button>
+              <button class="reasonbtn" onclick="recordRefused('体調不良', this)">体調不良</button>
+              <button class="reasonbtn" onclick="recordRefused('外出中', this)">外出中</button>
+              <button class="reasonbtn" onclick="recordRefused('その他', this)">その他</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Screen 4: Master -->
+      <section class="screen" id="sc-master">
+        <div class="sc-head">
+          <div class="sc-title">入居者マスター</div>
+        </div>
+        <div class="sc-body">
+          <button class="master-add" id="masterAddBtn" onclick="toggleMForm()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+            新規追加
+          </button>
+          <div class="mform" id="mForm">
+            <div class="field">
+              <div class="flabel">氏名</div>
+              <input id="mName" type="text" placeholder="例：中村 花子">
+            </div>
+            <div class="field">
+              <div class="flabel">ふりがな</div>
+              <input id="mKana" type="text" placeholder="例：なかむら はなこ">
+            </div>
+            <div class="field">
+              <div class="flabel">部屋番号</div>
+              <input id="mRoom" type="text" placeholder="例：303">
+            </div>
+            <div class="field">
+              <div class="flabel">注意事項 <span class="opt">任意</span></div>
+              <input id="mCaution" type="text" placeholder="例：粉砕して服用">
+            </div>
+            <div class="field">
+              <div class="flabel">服薬のある時間帯</div>
+              <div class="schedchecks" id="mSchedChecks">
+                <label class="schedcheck on"><input type="checkbox" data-slot="asa" checked>朝</label>
+                <label class="schedcheck on"><input type="checkbox" data-slot="hiru" checked>昼</label>
+                <label class="schedcheck on"><input type="checkbox" data-slot="yu" checked>夕</label>
+                <label class="schedcheck"><input type="checkbox" data-slot="neru">就寝前</label>
+              </div>
+            </div>
+            <div class="mform-actions">
+              <button class="btn-ghost" onclick="toggleMForm()">キャンセル</button>
+              <button class="btn-save" onclick="saveResident()">保存</button>
+            </div>
+          </div>
+          <div class="mlist" id="masterList"></div>
+          <p class="facefoot">アバターはデモ表示です。※実運用では顔写真</p>
+        </div>
+        <nav class="bottomnav">
+          <button class="navbtn" onclick="go('home')">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>
+            服薬記録
+          </button>
+          <button class="navbtn" aria-current="true" onclick="go('master')">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.2"/><path d="M5 20a7 7 0 0 1 14 0"/></svg>
+            入居者
+          </button>
+        </nav>
+      </section>
+
+      <!-- Screen 5: Master detail (reference meds) -->
+      <section class="screen" id="sc-mdetail">
+        <div class="sc-head">
+          <button class="backbtn" onclick="go('master')" aria-label="入居者マスターに戻る">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+          </button>
+          <div class="sc-title">入居者詳細</div>
+        </div>
+        <div class="mdetail-hero">
+          <div class="avatar lg" id="mdetAvatar"></div>
+          <div>
+            <div class="cname" id="mdetName"></div>
+            <div class="cmeta" id="mdetMeta"></div>
+            <div class="cnote" id="mdetNote"></div>
+          </div>
+        </div>
+        <div class="sc-body">
+          <div class="refsec-title">お薬の見本写真</div>
+          <div class="refsec-sub">服薬記録のときに表示され、手元の薬包と見比べる目安になります</div>
+          <div id="refRows"></div>
+          <p class="refsec-foot">処方が変わったときは見本写真を撮り直してください</p>
+        </div>
+      </section>
+    </div>
+
+    <!-- ============ PHARMACY SIDE ============ -->
+    <div class="pharma" id="pharmaPane">
+      <div class="pcard">
+        <div class="pharma-head">
+          <div class="pharma-title">服薬記録一覧</div>
+          <div class="pharma-sub">施設から送信された記録を確認・持ち出しできます</div>
+        </div>
+        <div class="filters">
+          <div class="fgroup">
+            <label for="fFacility">施設</label>
+            <select id="fFacility"><option>さくら苑</option></select>
+          </div>
+          <div class="fgroup">
+            <label for="fDate">日付</label>
+            <input id="fDate" type="date" value="2026-07-03">
+          </div>
+          <div class="fgroup">
+            <label for="fSlot">時間帯</label>
+            <select id="fSlot" onchange="renderPharma()">
+              <option value="all">すべて</option>
+              <option value="asa">朝</option>
+              <option value="hiru">昼</option>
+              <option value="yu">夕</option>
+              <option value="neru">就寝前</option>
+            </select>
+          </div>
+          <button class="copybtn" onclick="copyRecords()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg>
+            記録をコピー
+          </button>
+        </div>
+        <div class="summary" id="pharmaSummary"></div>
+        <div class="tablewrap">
+          <table class="ptable">
+            <thead>
+              <tr>
+                <th>時刻</th><th>入居者</th><th>時間帯</th><th>状態</th><th>実施者</th><th>コメント</th><th>写真</th>
+              </tr>
+            </thead>
+            <tbody id="pharmaBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Detail modal -->
+<div class="overlay" id="overlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mdName">
+    <div class="modal-head">
+      <div class="avatar" id="mdAvatar" style="width:44px;height:44px;font-size:19px"></div>
+      <div>
+        <div class="cname" id="mdName"></div>
+        <div class="cmeta" id="mdMeta"></div>
+      </div>
+      <button class="modal-close" onclick="closeModal()" aria-label="閉じる">×</button>
+    </div>
+    <div class="modal-body">
+      <dl class="dl" id="mdDl"></dl>
+      <div id="mdPhoto"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  // ---------- palette for time slots ----------
+  var SLOTS = {
+    asa:  { name:"朝",     time:"7:00 - 9:00",  color:"#C2620A" },
+    hiru: { name:"昼",     time:"11:30 - 13:00", color:"#0369A1" },
+    yu:   { name:"夕",     time:"17:00 - 19:00", color:"#B0491F" },
+    neru: { name:"就寝前", time:"20:00 - 21:30", color:"#4338CA" }
+  };
+  var SLOT_ORDER = ["asa","hiru","yu","neru"];
+
+  // ---------- medication timing labels (表示のみ) ----------
+  var TIMINGS = {
+    before:  "食前",
+    after:   "食後",
+    between: "食間",
+    none:    "指定なし"
+  };
+  var TIMING_ORDER = ["before","after","between","none"];
+
+  // avatar hues per resident (calm, distinct)
+  var AV_COLORS = ["#4B7B72","#7A5C86","#9A6B3F","#3F6D9A","#87614E","#5E8A57","#8A5A6B","#556B8A","#6E7A45","#7D6A9A","#4A8080","#96604A"];
+
+  // ---------- demo residents ----------
+  // states per slot: 'taken' | 'pending' | 'refused'
+  // sched: {asa,hiru,yu,neru} — その入居者に服薬のある時間帯
+  function sch(a,h,y,n){ return { asa:a, hiru:h, yu:y, neru:n }; }
+  var residents = [
+    { id:1,  name:"鈴木 太郎", kana:"すずき たろう", room:"101", caution:"", initial:"鈴", schedule:sch(1,1,1,0) },
+    { id:2,  name:"佐藤 ハナ", kana:"さとう はな",   room:"102", caution:"粉砕して服用", initial:"佐", schedule:sch(1,1,1,0) },
+    { id:3,  name:"田中 一郎", kana:"たなか いちろう", room:"103", caution:"", initial:"田", schedule:sch(1,0,0,0) },
+    { id:4,  name:"山本 キヨ", kana:"やまもと きよ",  room:"105", caution:"", initial:"山", schedule:sch(1,1,1,1) },
+    { id:5,  name:"渡辺 茂",   kana:"わたなべ しげる", room:"106", caution:"とろみ付き", initial:"渡", schedule:sch(1,1,1,0) },
+    { id:6,  name:"伊藤 フミ", kana:"いとう ふみ",    room:"201", caution:"", initial:"伊", schedule:sch(1,1,1,0) },
+    { id:7,  name:"小林 勝",   kana:"こばやし まさる", room:"202", caution:"", initial:"小", schedule:sch(1,0,1,0) },
+    { id:8,  name:"加藤 ヨシ子", kana:"かとう よしこ", room:"203", caution:"", initial:"加", schedule:sch(1,1,1,0) },
+    { id:9,  name:"吉田 正",   kana:"よしだ ただし",  room:"205", caution:"", initial:"吉", schedule:sch(1,1,1,0) },
+    { id:10, name:"松本 トメ", kana:"まつもと とめ",  room:"206", caution:"", initial:"松", schedule:sch(1,1,1,0) },
+    { id:11, name:"井上 清",   kana:"いのうえ きよし", room:"301", caution:"", initial:"井", schedule:sch(1,0,1,0) },
+    { id:12, name:"木村 ミツ", kana:"きむら みつ",    room:"302", caution:"", initial:"木", schedule:sch(1,1,0,0) }
+  ];
+  residents.forEach(function(r,i){ r.color = AV_COLORS[i % AV_COLORS.length]; });
+  function hasSlot(r, slot){ return !!(r.schedule && r.schedule[slot]); }
+
+  // ---------- reference (見本) meds per resident × slot ----------
+  // refMeds[id] = { asa:[{timing,note,updated}, ...], hiru:[...], yu:[...], neru:[...] }
+  // 各要素 = 見本写真1枚。timing は before|after|between|none
+  function emptyRef(){
+    return { asa:[], hiru:[], yu:[], neru:[] };
+  }
+  // add one sample photo to a resident×slot
+  function addRef(id, slot, timing, note, updated){
+    var r = residents.find(function(x){ return x.id===id; });
+    r.refMeds[slot].push({ timing:timing, note:note, updated:updated });
+  }
+  function slotHasSamples(r, slot){ return r.refMeds[slot] && r.refMeds[slot].length>0; }
+  residents.forEach(function(r){ r.refMeds = emptyRef(); });
+  // demo registrations (就寝前は少数・数名は全時間帯未登録のまま、複数枚の例を2名以上)
+  addRef(1, "asa", "after",  "白い錠剤2・カプセル（茶）1", "6/28");   // 鈴木 太郎
+  addRef(1, "yu",  "after",  "白い錠剤1", "6/28");
+  addRef(2, "asa", "before", "粉薬1包（粉砕指示）", "6/30");          // 佐藤 ハナ（朝2枚）
+  addRef(2, "asa", "after",  "錠剤2", "6/30");
+  addRef(2, "hiru","after",  "粉薬1包", "6/30");
+  addRef(5, "asa", "after",  "錠剤3（とろみ服用）", "6/29");          // 渡辺 茂
+  addRef(4, "asa", "before", "胃薬1包", "6/25");                     // 山本 キヨ（朝2枚）
+  addRef(4, "asa", "after",  "錠剤2", "6/25");
+  addRef(4, "neru","none",   "眠前薬 錠剤1", "6/25");                 // 就寝前あり（少数）
+  addRef(7, "asa", "after",  "白い錠剤1・黄色い錠剤1", "6/27");       // 小林 勝
+  addRef(7, "yu",  "after",  "白い錠剤1", "6/27");
+  addRef(10,"asa", "after",  "錠剤1・粉薬1包", "7/1");                // 松本 トメ
+  // 未登録のまま: 田中一郎(3)・伊藤フミ(6)・加藤ヨシ子(8)・吉田正(9)・井上清(11)・木村ミツ(12)
+
+  // records[slot] = { residentId: {state, staff, time, comment, hasPhoto, reason} }
+  // Seed: 朝 = 済9・未実施2・拒否1 (現実的な混在)
+  var records = { asa:{}, hiru:{}, yu:{}, neru:{} };
+
+  function seed(slot, id, state, extra){
+    records[slot][id] = Object.assign({ state:state, staff:"", time:"", comment:"", hasPhoto:false, reason:"" }, extra||{});
+  }
+  // 朝: 済9・未実施2・拒否1 (全員 朝あり)。id 8,12 未実施、5 拒否
+  var asaTaken = [
+    [1,"佐藤","8:12","むせ込みなし",true],
+    [2,"佐藤","8:15","粉砕して服用",true],
+    [3,"田村","8:20","",false],
+    [4,"田村","8:24","",true],
+    [6,"佐藤","8:31","",false],
+    [7,"山下","8:36","水分多めで",false],
+    [9,"山下","8:41","",true],
+    [10,"田村","8:45","",false],
+    [11,"佐藤","8:50","",true]
+  ];
+  asaTaken.forEach(function(a){ seed("asa",a[0],"taken",{staff:a[1],time:a[2],comment:a[3],hasPhoto:a[4]}); });
+  seed("asa",5,"refused",{staff:"佐藤",time:"8:28",reason:"体調不良",comment:"朝から食欲なし",hasPhoto:false});
+  seed("asa",8,"pending");
+  seed("asa",12,"pending");
+  // 昼: 一部済（昼ありの入居者のみ）。id 3,7,11 は昼なしなので記録なし
+  [[1,"田村","12:20","",false],[6,"山下","12:31","",false],[9,"山下","12:36","",false]].forEach(function(a){ seed("hiru",a[0],"taken",{staff:a[1],time:a[2],comment:a[3],hasPhoto:a[4]}); });
+  // 夕 & 就寝前: すべて未実施
+  // 全時間帯: schedule ON の入居者のみ pending で埋める（OFF は記録を作らない）
+  ["hiru","yu","neru"].forEach(function(sl){
+    residents.forEach(function(r){
+      if(hasSlot(r,sl) && !records[sl][r.id]) seed(sl,r.id,"pending");
+    });
+  });
+
+  function getState(slot,id){ return records[slot][id] || {state:"pending"}; }
+
+  // ---------- navigation state ----------
+  var currentSlot = "asa";
+  var currentResidentId = null;
+  var pickedStaff = "佐藤";
+  var photoCount = 0;
+
+  var screens = { home:"sc-home", list:"sc-list", record:"sc-record", master:"sc-master", mdetail:"sc-mdetail" };
+  function go(name){
+    Object.keys(screens).forEach(function(k){
+      document.getElementById(screens[k]).classList.toggle("active", k===name);
+    });
+    if(name==="home") renderHome();
+    if(name==="list") renderList();
+    if(name==="master") renderMaster();
+    if(name==="mdetail") renderMdetail();
+    window.scrollTo(0,0);
+  }
+  window.go = go;
+
+  function setRole(role){
+    var staff = role==="staff";
+    document.getElementById("staffPane").style.display = staff ? "" : "none";
+    document.getElementById("pharmaPane").classList.toggle("active", !staff);
+    document.getElementById("tab-staff").setAttribute("aria-selected", staff);
+    document.getElementById("tab-pharma").setAttribute("aria-selected", !staff);
+    if(!staff) renderPharma();
+    window.scrollTo(0,0);
+  }
+  window.setRole = setRole;
+
+  // ---------- Home ----------
+  function slotResidents(slot){
+    return residents.filter(function(r){ return hasSlot(r, slot); });
+  }
+  function slotProgress(slot){
+    var done=0, pend=0, list=slotResidents(slot);
+    list.forEach(function(r){
+      var s = getState(slot, r.id).state;
+      if(s==="taken"||s==="refused") done++;
+      if(s==="pending") pend++;
+    });
+    return { done:done, pend:pend, total:list.length };
+  }
+
+  function renderHome(){
+    var grid = document.getElementById("slotGrid");
+    grid.innerHTML = "";
+    SLOT_ORDER.forEach(function(key){
+      var s = SLOTS[key], p = slotProgress(key);
+      var pct = p.total>0 ? Math.round(p.done / p.total * 100) : 0;
+      var stat = p.pend>0
+        ? '<div class="slot-stat"><b>'+p.pend+'</b><span>未実施</span></div>'
+        : '<div class="slot-stat done"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>完了</span></div>';
+      var btn = document.createElement("button");
+      btn.className = "slot";
+      btn.style.setProperty("--slot", s.color);
+      btn.onclick = function(){ openSlot(key); };
+      btn.innerHTML =
+        '<div class="slot-row">'+
+          '<span class="slot-mark" style="background:'+s.color+'"></span>'+
+          '<div class="slot-main"><div class="slot-name">'+s.name+'</div><div class="slot-time">'+s.time+'</div></div>'+
+          stat+
+          '<span class="chevron"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span>'+
+        '</div>'+
+        '<div class="slot-foot"><div class="slot-track"><i style="width:'+pct+'%"></i></div><span class="slot-count">'+p.done+' / '+p.total+'</span></div>';
+      grid.appendChild(btn);
+    });
+  }
+
+  function openSlot(key){
+    currentSlot = key;
+    document.getElementById("pendOnly").checked = false;
+    go("list");
+  }
+  window.openSlot = openSlot;
+
+  // ---------- Resident list ----------
+  var ORDER_RANK = { pending:0, refused:1, taken:2 };
+  function renderList(){
+    var s = SLOTS[currentSlot];
+    var slotList = slotResidents(currentSlot);
+    document.getElementById("listTitle").textContent = s.name + "の服薬";
+    document.getElementById("listSub").textContent = s.time + " ・ " + slotList.length + "名";
+    var pendOnly = document.getElementById("pendOnly").checked;
+
+    var list = slotList.slice().sort(function(a,b){
+      var sa = getState(currentSlot,a.id).state, sb = getState(currentSlot,b.id).state;
+      if(ORDER_RANK[sa] !== ORDER_RANK[sb]) return ORDER_RANK[sa]-ORDER_RANK[sb];
+      return a.room.localeCompare(b.room);
+    });
+    var pend = list.filter(function(r){ return getState(currentSlot,r.id).state==="pending"; }).length;
+    document.getElementById("listCount").textContent = "未実施 " + pend + "件 / " + slotList.length + "名";
+
+    if(pendOnly) list = list.filter(function(r){ return getState(currentSlot,r.id).state==="pending"; });
+
+    var wrap = document.getElementById("residentList");
+    wrap.innerHTML = "";
+    if(list.length===0){
+      wrap.innerHTML = '<p style="text-align:center;color:var(--sub);font-size:14px;padding:24px 0">未実施の入居者はいません</p>';
+      return;
+    }
+    list.forEach(function(r){
+      var st = getState(currentSlot, r.id);
+      var chip = st.state==="taken" ? '<span class="chip done">済 '+st.time+'</span>'
+               : st.state==="refused" ? '<span class="chip refu">'+(st.reason||"拒否")+'</span>'
+               : '<span class="chip pend">未実施</span>';
+      var btn = document.createElement("button");
+      btn.className = "ritem";
+      btn.onclick = function(){ openRecord(r.id); };
+      btn.innerHTML =
+        '<span class="avatar" style="background:'+r.color+'">'+r.initial+'</span>'+
+        '<span class="rinfo"><span class="rname">'+r.name+'</span>'+
+        '<span class="rmeta">'+r.room+'号室</span></span>'+
+        chip+
+        '<span class="chevron"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span>';
+      wrap.appendChild(btn);
+    });
+  }
+  window.renderList = renderList;
+
+  // ---------- Record screen ----------
+  function openRecord(id){
+    currentResidentId = id;
+    var r = residents.find(function(x){ return x.id===id; });
+    var s = SLOTS[currentSlot];
+    document.getElementById("recAvatar").textContent = r.initial;
+    document.getElementById("recAvatar").style.background = r.color;
+    document.getElementById("recName").textContent = r.name;
+    document.getElementById("recMeta").textContent = r.room + "号室" + (r.caution ? " ・ " + r.caution : "");
+    var pill = document.getElementById("recSlotPill");
+    pill.textContent = s.name + " " + s.time;
+    pill.style.color = s.color;
+
+    renderRecordRef(r, currentSlot);
+
+    // reset form (実施者は直前の選択を保持 — 同じ職員が連続記録する現場動線のため)
+    var segs = document.querySelectorAll("#staffSeg .segbtn");
+    segs.forEach(function(b){ b.setAttribute("aria-pressed", b.textContent.indexOf(pickedStaff)===0 ? "true":"false"); });
+    photoCount = 0;
+    document.getElementById("thumbs").innerHTML = "";
+    document.getElementById("recComment").value = "";
+    document.getElementById("reasons").classList.remove("show");
+    document.querySelectorAll("#reasonGrid .reasonbtn").forEach(function(b){ b.classList.remove("sel"); });
+
+    // prefill from existing record when re-visiting
+    var st = getState(currentSlot, id);
+    if(st.state==="taken" || st.state==="refused"){
+      pickedStaff = st.staff || "佐藤";
+      segs.forEach(function(b){ b.setAttribute("aria-pressed", b.textContent.indexOf(pickedStaff)===0 ? "true":"false"); });
+      document.getElementById("recComment").value = st.comment || "";
+      if(st.hasPhoto){ addPhoto(); }
+    }
+    go("record");
+  }
+  window.openRecord = openRecord;
+
+  // reference-meds panel on the record screen (表示のみ・自動判定/警告なし)
+  function renderRecordRef(r, slot){
+    var head = document.getElementById("recRefPanel").querySelector(".refpanel-head");
+    var s = SLOTS[slot];
+    head.innerHTML =
+      '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M8 4v5"/></svg>'+
+      'この時間帯（'+s.name+'）のお薬（見本）';
+    var arr = r.refMeds[slot] || [];
+    var body = document.getElementById("recRefBody");
+    if(arr.length>0){
+      var samples = arr.map(function(ref){
+        return '<div class="refsample">'+
+          '<div class="refphoto"><div class="pill"></div><div class="seam"></div></div>'+
+          '<div class="refsample-chip">'+timingChip(ref.timing)+'</div>'+
+          '<div class="refsample-note">'+esc(ref.note)+'</div>'+
+        '</div>';
+      }).join("");
+      body.innerHTML =
+        '<div class="refinfo" style="width:100%">'+
+          '<div class="refsamples">'+samples+'</div>'+
+          '<div class="refhint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg><span>手元の薬包と見比べてください</span></div>'+
+        '</div>';
+    } else {
+      body.innerHTML =
+        '<div class="refphoto empty"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.2"/><path d="M8 6l1.5-2h5L16 6"/></svg></div>'+
+        '<div class="refinfo">'+
+          '<div class="refempty-title">見本写真が未登録です</div>'+
+          '<button class="reflink" onclick="openMasterDetail('+r.id+')">入居者マスターから登録できます</button>'+
+        '</div>';
+    }
+  }
+
+  // timing chip html (表示のみ)
+  function timingChip(timing){
+    var t = timing || "none";
+    var cls = t==="none" ? "tchip none" : "tchip";
+    return '<span class="'+cls+'">'+TIMINGS[t]+'</span>';
+  }
+  function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+
+  function pickStaff(btn, name){
+    pickedStaff = name;
+    document.querySelectorAll("#staffSeg .segbtn").forEach(function(b){ b.setAttribute("aria-pressed", b===btn ? "true":"false"); });
+  }
+  window.pickStaff = pickStaff;
+
+  function addPhoto(){
+    if(photoCount>=3) return;
+    photoCount++;
+    var t = document.createElement("div");
+    t.className = "thumb";
+    t.innerHTML = '<div class="pill"></div><div class="seam"></div><button class="rm" aria-label="削除">×</button>';
+    t.querySelector(".rm").onclick = function(ev){ ev.stopPropagation(); t.remove(); photoCount--; };
+    document.getElementById("thumbs").appendChild(t);
+  }
+  window.addPhoto = addPhoto;
+
+  function toggleReasons(){
+    document.getElementById("reasons").classList.toggle("show");
+  }
+  window.toggleReasons = toggleReasons;
+
+  function nowHM(){
+    var d = new Date();
+    return d.getHours() + ":" + String(d.getMinutes()).padStart(2,"0");
+  }
+  // fixed demo "now" so seeded times stay consistent-looking
+  function demoTime(){
+    // vary slightly around 14:02 for demo realism
+    var base = 14*60 + 2 + Math.floor(Math.random()*4);
+    return Math.floor(base/60) + ":" + String(base%60).padStart(2,"0");
+  }
+
+  function recordTaken(){
+    var id = currentResidentId;
+    var t = demoTime();
+    records[currentSlot][id] = {
+      state:"taken", staff:pickedStaff, time:t,
+      comment:document.getElementById("recComment").value.trim(),
+      hasPhoto: photoCount>0, reason:""
+    };
+    showToast("記録しました", t + " 記録者:" + pickedStaff);
+    go("list");
+  }
+  window.recordTaken = recordTaken;
+
+  function recordRefused(reason, btn){
+    document.querySelectorAll("#reasonGrid .reasonbtn").forEach(function(b){ b.classList.remove("sel"); });
+    btn.classList.add("sel");
+    var id = currentResidentId;
+    var t = demoTime();
+    records[currentSlot][id] = {
+      state:"refused", staff:pickedStaff, time:t,
+      comment:document.getElementById("recComment").value.trim(),
+      hasPhoto: photoCount>0, reason:reason
+    };
+    showToast("拒否として記録しました", t + " 記録者:" + pickedStaff + " ・ " + reason);
+    setTimeout(function(){ go("list"); }, 250);
+  }
+  window.recordRefused = recordRefused;
+
+  // ---------- Master ----------
+  function toggleMForm(){
+    var f = document.getElementById("mForm");
+    var show = !f.classList.contains("show");
+    f.classList.toggle("show", show);
+    document.getElementById("masterAddBtn").style.display = show ? "none" : "";
+    if(!show){
+      ["mName","mKana","mRoom","mCaution"].forEach(function(x){ document.getElementById(x).value=""; });
+    } else {
+      // reset schedule checkboxes to default (朝昼夕ON・就寝前OFF)
+      document.querySelectorAll("#mSchedChecks input[type=checkbox]").forEach(function(cb){
+        var def = cb.getAttribute("data-slot")!=="neru";
+        cb.checked = def;
+        cb.closest(".schedcheck").classList.toggle("on", def);
+      });
+    }
+  }
+  window.toggleMForm = toggleMForm;
+
+  // schedule checkbox visual toggle in add form
+  document.querySelectorAll("#mSchedChecks input[type=checkbox]").forEach(function(cb){
+    cb.addEventListener("change", function(){
+      cb.closest(".schedcheck").classList.toggle("on", cb.checked);
+    });
+  });
+
+  function saveResident(){
+    var name = document.getElementById("mName").value.trim();
+    var room = document.getElementById("mRoom").value.trim();
+    if(!name || !room){ showToast("氏名と部屋番号を入力してください",""); return; }
+    var caution = document.getElementById("mCaution").value.trim();
+    var id = Math.max.apply(null, residents.map(function(r){return r.id;})) + 1;
+    var initial = name.replace(/\s/g,"").charAt(0);
+    var color = AV_COLORS[(residents.length) % AV_COLORS.length];
+    var schedule = { asa:false, hiru:false, yu:false, neru:false };
+    document.querySelectorAll("#mSchedChecks input[type=checkbox]").forEach(function(cb){
+      schedule[cb.getAttribute("data-slot")] = cb.checked;
+    });
+    var r = { id:id, name:name, kana:document.getElementById("mKana").value.trim(), room:room, caution:caution, initial:initial, color:color, schedule:schedule, refMeds:emptyRef() };
+    residents.push(r);
+    // new resident starts pending in scheduled slots only
+    SLOT_ORDER.forEach(function(sl){ if(schedule[sl]) records[sl][id] = {state:"pending",staff:"",time:"",comment:"",hasPhoto:false,reason:""}; });
+    toggleMForm();
+    renderMaster();
+    showToast("入居者を追加しました", name + " ・ " + room + "号室");
+  }
+  window.saveResident = saveResident;
+
+  function refDotsHtml(r){
+    var dots = SLOT_ORDER.filter(function(sl){ return slotHasSamples(r, sl); })
+      .map(function(sl){ return '<span class="refdot" style="background:'+SLOTS[sl].color+'" title="'+SLOTS[sl].name+' 見本登録済み"></span>'; });
+    return dots.length ? '<span class="refdots" aria-label="見本登録済みの時間帯">'+dots.join("")+'</span>' : "";
+  }
+
+  function renderMaster(){
+    var wrap = document.getElementById("masterList");
+    wrap.innerHTML = "";
+    residents.forEach(function(r){
+      var row = document.createElement("button");
+      row.className = "mrow tappable";
+      row.onclick = function(){ openMasterDetail(r.id); };
+      row.innerHTML =
+        '<span class="avatar" style="background:'+r.color+'">'+r.initial+'</span>'+
+        '<span class="rinfo"><span class="rname">'+r.name+'</span>'+
+        '<span class="rmeta">'+(r.kana||"")+' ・ '+r.room+'号室</span>'+
+        (r.caution ? '<span class="mnote">注意: '+r.caution+'</span>' : '')+
+        refDotsHtml(r)+
+        '</span>'+
+        '<span class="chevron"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span>';
+      wrap.appendChild(row);
+    });
+  }
+
+  // ---------- Master detail (reference meds) ----------
+  var mdetailId = null;
+  function openMasterDetail(id){
+    mdetailId = id;
+    go("mdetail");
+  }
+  window.openMasterDetail = openMasterDetail;
+
+  function renderMdetail(){
+    var r = residents.find(function(x){ return x.id===mdetailId; });
+    if(!r) return;
+    document.getElementById("mdetAvatar").textContent = r.initial;
+    document.getElementById("mdetAvatar").style.background = r.color;
+    document.getElementById("mdetName").textContent = r.name;
+    document.getElementById("mdetMeta").textContent = (r.kana?r.kana+" ・ ":"") + r.room + "号室";
+    var noteEl = document.getElementById("mdetNote");
+    noteEl.textContent = r.caution ? "注意: " + r.caution : "";
+    noteEl.style.display = r.caution ? "" : "none";
+
+    var wrap = document.getElementById("refRows");
+    wrap.innerHTML = "";
+    SLOT_ORDER.forEach(function(sl){
+      var s = SLOTS[sl];
+      var on = hasSlot(r, sl);
+      var arr = r.refMeds[sl] || [];
+      var row = document.createElement("div");
+      row.className = "refrow" + (on ? "" : " off");
+
+      // schedule toggle in the header
+      var checkedAttr = on ? " checked" : "";
+      var head =
+        '<div class="refrow-head">'+
+          '<div class="refrow-slot"><span class="refrow-mark" style="background:'+s.color+'"></span><span class="refrow-slotname">'+s.name+'</span></div>'+
+          '<div class="refrow-headmain"></div>'+
+          '<label class="schedtoggle"><span class="lbl">服薬</span>'+
+            '<input type="checkbox" data-slot="'+sl+'"'+checkedAttr+' aria-label="'+s.name+'の服薬あり／なし">'+
+            '<span class="switch"></span>'+
+          '</label>'+
+        '</div>';
+
+      // body: sample list + add-shoot form (hidden when OFF)
+      var items;
+      if(arr.length>0){
+        items = arr.map(function(ref, idx){
+          return '<div class="sampleitem">'+
+            '<div class="refthumb"><div class="pill"></div><div class="seam"></div></div>'+
+            '<div class="sample-main">'+
+              '<div class="sample-meta">'+timingChip(ref.timing)+'<span class="sample-updated">登録日 '+esc(ref.updated)+'</span></div>'+
+              '<div class="sample-note">'+esc(ref.note || "（メモなし）")+'</div>'+
+            '</div>'+
+            '<button class="sample-del" data-slot="'+sl+'" data-idx="'+idx+'">削除</button>'+
+          '</div>';
+        }).join("");
+      } else {
+        items = '<div class="sample-empty">見本写真は未登録です</div>';
+      }
+
+      var timingSeg = TIMING_ORDER.map(function(t, i){
+        return '<button type="button" class="timingbtn" data-timing="'+t+'" aria-pressed="'+(i===1?"true":"false")+'">'+TIMINGS[t]+'</button>';
+      }).join("");
+
+      var body =
+        '<div class="refrow-body'+(on?"":" hidden")+'">'+
+          '<div class="samplelist">'+items+'</div>'+
+          '<button class="btn-addshoot" data-slot="'+sl+'"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.2"/></svg>撮影を追加</button>'+
+          '<div class="shootform" data-slot="'+sl+'">'+
+            '<div class="sflabel">服用のタイミング</div>'+
+            '<div class="timingseg">'+timingSeg+'</div>'+
+            '<div class="sflabel">メモ <span class="opt" style="font-weight:500">任意</span></div>'+
+            '<input class="sf-note" type="text" placeholder="例：白い錠剤2・カプセル1">'+
+            '<div class="shootform-actions">'+
+              '<button type="button" class="btn-ghost sf-cancel">キャンセル</button>'+
+              '<button type="button" class="btn-shootgo">撮影して登録</button>'+
+            '</div>'+
+          '</div>'+
+        '</div>';
+
+      row.innerHTML = head + body;
+
+      // wire schedule toggle
+      row.querySelector(".schedtoggle input").onchange = function(){ toggleSchedule(r.id, sl, this.checked); };
+      // wire per-sample delete
+      row.querySelectorAll(".sample-del").forEach(function(db){
+        db.onclick = function(){ deleteRef(r.id, sl, +db.getAttribute("data-idx")); };
+      });
+      // wire add-shoot form
+      var form = row.querySelector(".shootform");
+      row.querySelector(".btn-addshoot").onclick = function(){ form.classList.add("show"); };
+      form.querySelector(".sf-cancel").onclick = function(){ form.classList.remove("show"); };
+      form.querySelectorAll(".timingbtn").forEach(function(tb){
+        tb.onclick = function(){
+          form.querySelectorAll(".timingbtn").forEach(function(x){ x.setAttribute("aria-pressed","false"); });
+          tb.setAttribute("aria-pressed","true");
+        };
+      });
+      form.querySelector(".btn-shootgo").onclick = function(){
+        var timing = form.querySelector('.timingbtn[aria-pressed="true"]');
+        timing = timing ? timing.getAttribute("data-timing") : "after";
+        var note = form.querySelector(".sf-note").value.trim();
+        shootRef(r.id, sl, timing, note);
+      };
+
+      wrap.appendChild(row);
+    });
+  }
+
+  function toggleSchedule(id, sl, on){
+    var r = residents.find(function(x){ return x.id===id; });
+    r.schedule[sl] = !!on;
+    if(on){
+      // create a pending record if none exists (見本データは保持済み)
+      if(!records[sl][id]) records[sl][id] = {state:"pending",staff:"",time:"",comment:"",hasPhoto:false,reason:""};
+    } else {
+      // remove record so it disappears from lists/home/pharmacy (見本データは保持)
+      delete records[sl][id];
+    }
+    renderMdetail();
+    showToast(on ? "服薬ありに設定しました" : "服薬なしに設定しました", r.name + " ・ " + SLOTS[sl].name);
+  }
+
+  function shootRef(id, sl, timing, note){
+    var r = residents.find(function(x){ return x.id===id; });
+    r.refMeds[sl].push({ timing:timing, note:note, updated:"7/3" });
+    renderMdetail();
+    showToast("見本写真を登録しました", r.name + " ・ " + SLOTS[sl].name + " ・ " + TIMINGS[timing]);
+  }
+
+  function deleteRef(id, sl, idx){
+    var r = residents.find(function(x){ return x.id===id; });
+    if(r.refMeds[sl] && idx>=0 && idx<r.refMeds[sl].length){
+      r.refMeds[sl].splice(idx, 1);
+    }
+    renderMdetail();
+    showToast("見本写真を削除しました", r.name + " ・ " + SLOTS[sl].name);
+  }
+
+  // ---------- Pharmacy ----------
+  function flatRecords(){
+    var rows = [];
+    SLOT_ORDER.forEach(function(sl){
+      residents.forEach(function(r){
+        if(!hasSlot(r, sl)) return; // OFFの組合せは行として出さない
+        var st = getState(sl, r.id);
+        rows.push({ slot:sl, resident:r, st:st });
+      });
+    });
+    return rows;
+  }
+
+  function currentPharmaRows(){
+    var sel = document.getElementById("fSlot").value;
+    var rows = flatRecords().filter(function(x){ return sel==="all" ? true : x.slot===sel; });
+    // show recorded first (by time), pending after
+    rows.sort(function(a,b){
+      var ra = a.st.state==="pending"?1:0, rb = b.st.state==="pending"?1:0;
+      if(ra!==rb) return ra-rb;
+      if(a.slot!==b.slot) return SLOT_ORDER.indexOf(a.slot)-SLOT_ORDER.indexOf(b.slot);
+      return (a.st.time||"").localeCompare(b.st.time||"");
+    });
+    return rows;
+  }
+
+  function stateLabel(s){
+    return s==="taken" ? "服薬済" : s==="refused" ? "拒否・スキップ" : "未実施";
+  }
+  function stateChip(s, reason){
+    if(s==="taken") return '<span class="chip done">服薬済</span>';
+    if(s==="refused") return '<span class="chip refu">'+(reason||"拒否")+'</span>';
+    return '<span class="chip pend">未実施</span>';
+  }
+
+  function renderPharma(){
+    var rows = currentPharmaRows();
+    var body = document.getElementById("pharmaBody");
+    body.innerHTML = "";
+    rows.forEach(function(x, i){
+      var r = x.resident, st = x.st, s = SLOTS[x.slot];
+      var tr = document.createElement("tr");
+      if(st.state==="refused") tr.className = "stripe-refu";
+      else if(st.state==="pending") tr.className = "stripe-pend";
+      tr.onclick = function(){ openDetail(x); };
+      tr.innerHTML =
+        '<td class="time">'+(st.time||"—")+'</td>'+
+        '<td><span class="rname-cell"><span class="avatar" style="background:'+r.color+'">'+r.initial+'</span>'+r.name+' <span style="color:var(--sub);font-size:12.5px">'+r.room+'</span></span></td>'+
+        '<td><span class="slot-tag" style="color:'+s.color+'">'+s.name+'</span></td>'+
+        '<td>'+stateChip(st.state, st.reason)+'</td>'+
+        '<td>'+(st.staff||"—")+'</td>'+
+        '<td class="cmt-cell">'+(st.comment||'<span style="color:#B7C3C0">—</span>')+'</td>'+
+        '<td>'+(st.hasPhoto ? '<span class="photo-yes"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3"/></svg>あり</span>' : '<span class="photo-no">なし</span>')+'</td>';
+      body.appendChild(tr);
+    });
+    renderSummary(rows);
+  }
+  window.renderPharma = renderPharma;
+
+  function renderSummary(rows){
+    var taken=0, refused=0, total=rows.length, pending=0;
+    rows.forEach(function(x){
+      if(x.st.state==="taken") taken++;
+      else if(x.st.state==="refused") refused++;
+      else pending++;
+    });
+    var attempted = taken + refused; // 実施済み(記録あり)
+    var rate = attempted>0 ? Math.round(taken/attempted*100) : 0;
+    var el = document.getElementById("pharmaSummary");
+    el.innerHTML =
+      '<div class="stat good"><div class="n">'+rate+'%</div><div class="l">服薬率（記録分）</div></div>'+
+      '<div class="stat"><div class="n">'+taken+'</div><div class="l">服薬済</div></div>'+
+      '<div class="stat warn"><div class="n">'+refused+'</div><div class="l">拒否・スキップ</div></div>'+
+      '<div class="stat"><div class="n">'+pending+'</div><div class="l">未実施</div></div>';
+  }
+
+  // ---------- Detail modal ----------
+  var WEEK = ["日","月","火","水","木","金","土"];
+  function fmtDate(){
+    var v = document.getElementById("fDate").value; // yyyy-mm-dd
+    var parts = v.split("-");
+    if(parts.length!==3) return v;
+    var d = new Date(+parts[0], +parts[1]-1, +parts[2]);
+    return (+parts[1]) + "/" + (+parts[2]) + "(" + WEEK[d.getDay()] + ")";
+  }
+
+  function openDetail(x){
+    var r = x.resident, st = x.st, s = SLOTS[x.slot];
+    document.getElementById("mdAvatar").textContent = r.initial;
+    document.getElementById("mdAvatar").style.background = r.color;
+    document.getElementById("mdName").textContent = r.name;
+    document.getElementById("mdMeta").textContent = r.room + "号室" + (r.kana?" ・ "+r.kana:"");
+    var dl = document.getElementById("mdDl");
+    var rows = [
+      ["日付", fmtDate()],
+      ["時間帯", '<span style="color:'+s.color+';font-weight:700">'+s.name+'</span> ('+s.time+')'],
+      ["状態", stateChip(st.state, st.reason)],
+      ["時刻", st.time || "—"],
+      ["実施者", st.staff || "—"]
+    ];
+    if(st.state==="refused") rows.push(["理由", st.reason||"—"]);
+    rows.push(["コメント", st.comment ? st.comment : '<span style="color:#B7C3C0">記載なし</span>']);
+    dl.innerHTML = rows.map(function(row){ return '<dt>'+row[0]+'</dt><dd>'+row[1]+'</dd>'; }).join("");
+
+    var ph = document.getElementById("mdPhoto");
+    if(st.hasPhoto){
+      ph.innerHTML = '<div class="detail-photo"><div class="pill2"></div><span class="plabel">薬包の写真（デモ）</span></div>';
+    } else {
+      ph.innerHTML = '<div class="detail-photo" style="background:#F7FAF9"><span class="plabel" style="background:none;color:var(--sub)">写真なし</span></div>';
+    }
+    document.getElementById("overlay").classList.add("show");
+  }
+
+  function closeModal(){ document.getElementById("overlay").classList.remove("show"); }
+  window.closeModal = closeModal;
+  document.addEventListener("keydown", function(e){ if(e.key==="Escape") closeModal(); });
+
+  // ---------- Copy records ----------
+  function copyRecords(){
+    var rows = currentPharmaRows();
+    var date = fmtDate();
+    var lines = rows.map(function(x){
+      var r = x.resident, st = x.st, s = SLOTS[x.slot];
+      var stateTxt = stateLabel(st.state);
+      var line = date + " " + s.name + " " + r.name.replace(/\s/g,"") + ": " + stateTxt;
+      if(st.time) line += " " + st.time;
+      if(st.staff) line += " 実施:" + st.staff;
+      if(st.state==="refused" && st.reason) line += " 理由:" + st.reason;
+      if(st.comment) line += " コメント:" + st.comment;
+      return line;
+    });
+    var text = lines.join("\n");
+    function done(){ showToast("コピーしました", rows.length + "件の記録をコピー"); }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(done, function(){ fallbackCopy(text); done(); });
+    } else {
+      fallbackCopy(text); done();
+    }
+  }
+  window.copyRecords = copyRecords;
+
+  function fallbackCopy(text){
+    try {
+      var ta = document.createElement("textarea");
+      ta.value = text; ta.style.position="fixed"; ta.style.opacity="0";
+      document.body.appendChild(ta); ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+    } catch(e){}
+  }
+
+  // ---------- Toast ----------
+  var toastTimer;
+  function showToast(msg, meta){
+    var t = document.getElementById("toast");
+    t.innerHTML = '<span class="check"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span>'+msg+(meta?' <span class="meta">'+meta+'</span>':'')+'</span>';
+    t.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ t.classList.remove("show"); }, 3200);
+  }
+
+  // ---------- init ----------
+  renderHome();
+  renderMaster();
+})();
+</script>
+
+</body>
+</html>
