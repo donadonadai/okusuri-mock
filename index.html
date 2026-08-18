@@ -608,6 +608,115 @@
   .toast .check { color: #58C98F; flex: none; }
   .toast .meta { color: #A9B3AD; font-weight: 500; font-size: 12px; }
 
+  /* ---------- Identity block (record screen) ---------- */
+  .cident { font-size: 13px; color: var(--ink); margin-top: 4px; font-weight: 600; letter-spacing: .02em; }
+  .cwarn { font-size: 11.5px; color: var(--amber); font-weight: 700; margin-top: 4px; letter-spacing: .02em; }
+  .rwarn { display: block; font-size: 11px; color: var(--amber); font-weight: 700; margin-top: 2px; letter-spacing: .02em; }
+
+  /* ---------- Sample source label (薬局 / 他院・持参薬) ---------- */
+  .srcnote { font-size: 10.5px; letter-spacing: .12em; font-weight: 700; color: var(--sub); white-space: nowrap; }
+  .srcnote.other { color: var(--amber); }
+
+  /* ---------- Sample confirm checkbox (record screen) ---------- */
+  .samplecheck {
+    display: flex; align-items: center; gap: 8px; min-height: 44px; margin-top: 4px;
+    font-size: 12.5px; font-weight: 700; color: var(--sub); cursor: pointer; user-select: none;
+  }
+  .samplecheck input { width: 22px; height: 22px; margin: 0; flex: none; accent-color: var(--brand); }
+  .samplecheck.on { color: var(--brand-deep); }
+  .samplecheck input:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+  .warnnote { font-size: 11.5px; color: var(--amber); font-weight: 700; margin: 0; letter-spacing: .02em; }
+
+  /* ---------- Notices (薬局 → 施設) ---------- */
+  .noticebox { margin: 0 0 20px; }
+  .noticehead {
+    font-size: 11px; font-weight: 800; letter-spacing: .09em; color: var(--sub);
+    display: flex; align-items: center; gap: 8px; margin-bottom: 10px;
+  }
+  .noticehead .unread { color: var(--amber); }
+  .noticeitem { border-left: 2px solid var(--amber); padding: 2px 0 2px 12px; margin-bottom: 14px; }
+  .noticeitem.read { border-left-color: var(--hair2); }
+  .noticeitem .ntext { font-size: 13px; font-weight: 700; line-height: 1.5; }
+  .noticeitem.read .ntext { font-weight: 600; color: var(--sub); }
+  .noticeitem .nmeta { font-size: 10.5px; color: var(--sub); letter-spacing: .04em; margin-top: 3px; }
+  .nack {
+    appearance: none; margin-top: 8px; background: var(--paper); border: 1px solid var(--hair2);
+    border-radius: 8px; padding: 8px 13px; min-height: 40px; font-size: 12.5px; font-weight: 700; color: var(--brand-deep);
+  }
+  .nack:active { background: var(--brand-wash); }
+  .nmore {
+    appearance: none; background: none; border: none; padding: 4px 0; margin: 0 0 4px;
+    font-size: 12px; font-weight: 700; color: var(--sub); letter-spacing: .03em;
+    text-decoration: underline; text-underline-offset: 3px; cursor: pointer; min-height: 40px;
+  }
+  .noticeread { margin-top: 6px; }
+  .noticeline { border-left: 2px solid var(--amber); padding: 4px 0 4px 12px; margin-bottom: 10px; }
+  .noticeline .ntext { font-size: 12.5px; font-weight: 700; line-height: 1.45; }
+  .noticeline .nmeta { display: block; font-size: 10.5px; color: var(--sub); font-weight: 600; letter-spacing: .04em; margin-top: 2px; }
+
+  /* ---------- Extras (その他の用法) ---------- */
+  .kchip {
+    display: inline-flex; align-items: center;
+    font-size: 10.5px; font-weight: 800; line-height: 1; letter-spacing: .08em;
+    padding: 4px 7px; border-radius: 4px;
+    border: 1px solid var(--hair2); color: var(--sub); background: var(--paper); white-space: nowrap;
+  }
+  .slot.extra { border-top: 1px solid var(--hair); margin-top: 10px; }
+  .slot.extra .slot-count { font-size: 12px; }
+  .extrasec { margin-top: 24px; padding-top: 18px; border-top: 1px solid var(--hair2); }
+  .extraitem { display: flex; align-items: flex-start; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--hair); }
+  .extraitem .refthumb { width: 58px; height: 58px; border-radius: 7px; }
+  .extraitem .refthumb .pill { inset: 13px 10px; border-radius: 16px/30px; }
+  .extra-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 5px; }
+  .extra-label { font-size: 14.5px; font-weight: 800; letter-spacing: .01em; }
+  .extra-note { font-size: 13px; color: var(--ink); font-weight: 600; line-height: 1.45; }
+  .extra-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .extra-empty { font-size: 12.5px; color: var(--faint); padding: 2px 0 10px; }
+  .exrow {
+    appearance: none; width: 100%; text-align: left; background: transparent;
+    border: none; border-bottom: 1px solid var(--hair); border-radius: 0;
+    padding: 13px 2px; display: flex; align-items: center; gap: 12px; min-height: 64px; color: var(--ink);
+  }
+  .exrow:active { background: var(--soft); }
+  .exgroup { font-size: 11px; font-weight: 800; letter-spacing: .09em; color: var(--sub); margin: 18px 0 4px; }
+
+  /* ---------- Pharmacy: notice composer ---------- */
+  .psend { padding: 18px 26px; border-bottom: 1px solid var(--hair); }
+  .psend-title { font-size: 11px; font-weight: 800; letter-spacing: .09em; color: var(--sub); margin-bottom: 11px; }
+  .psend-row { display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap; }
+  .psend textarea {
+    flex: 1; min-width: 240px; border: 1px solid var(--hair2); border-radius: var(--radius);
+    background: #fff; padding: 10px 12px; font-size: 13.5px; min-height: 46px; color: var(--ink); resize: vertical;
+  }
+  .psend textarea:focus { outline: 2px solid var(--brand); outline-offset: 1px; }
+  .btn-send {
+    appearance: none; background: var(--brand); color: #fff; border: none; border-radius: 8px;
+    padding: 10px 20px; min-height: 46px; font-size: 13.5px; font-weight: 800; letter-spacing: .04em; flex: none;
+  }
+  .btn-send:active { background: var(--brand-deep); }
+  .sentlist { margin-top: 14px; }
+  .sentitem { padding: 11px 0; border-top: 1px solid var(--hair); }
+  .sentitem .sto { font-size: 10.5px; font-weight: 800; letter-spacing: .08em; color: var(--sub); }
+  .sentitem .stext { font-size: 13px; font-weight: 700; line-height: 1.5; margin-top: 2px; }
+  .sentitem .sread { font-size: 11px; margin-top: 4px; letter-spacing: .03em; }
+  .sentitem .sread.un { color: var(--amber); font-weight: 700; }
+  .sentitem .sread.rd { color: var(--sub); font-weight: 600; }
+
+  /* ---------- Pharmacy: per-resident blocks ---------- */
+  .pnamerow td { background: var(--soft); padding: 11px 16px; border-bottom: 1px solid var(--hair2); }
+  .pnamerow .pname { font-size: 14px; font-weight: 800; letter-spacing: .01em; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .pnamerow .pmeta { font-size: 11.5px; color: var(--sub); font-weight: 600; letter-spacing: .03em; }
+  .ptable tbody tr.pnamerow { cursor: default; }
+  .ptable tbody tr.pnamerow:hover { background: transparent; }
+  .confirmcell { font-size: 12px; color: var(--sub); max-width: 240px; line-height: 1.55; white-space: normal; }
+  .confirmcell .ok { color: var(--green); font-weight: 700; }
+  .confirmcell .ng { color: var(--amber); font-weight: 700; }
+  .pempty { padding: 30px 26px; color: var(--sub); font-size: 13.5px; }
+  .mdlist { margin: 0; padding: 0; list-style: none; font-size: 13px; }
+  .mdlist li { display: flex; align-items: flex-start; gap: 7px; padding: 3px 0; line-height: 1.5; }
+  .mdlist li .ok { color: var(--green); flex: none; margin-top: 3px; }
+  .mdlist li .ng { color: var(--amber); font-size: 11px; font-weight: 700; flex: none; }
+
   @media (prefers-reduced-motion: reduce) {
     * { transition: none !important; animation: none !important; }
   }
@@ -648,6 +757,7 @@
         </div>
         <div class="sc-body">
           <p class="datechip"><span class="todaydot"></span><b>2026年7月3日（金）</b></p>
+          <div class="noticebox" id="homeNotices"><!-- filled by JS --></div>
           <div class="slotgrid" id="slotGrid"><!-- filled by JS --></div>
         </div>
         <nav class="bottomnav">
@@ -699,14 +809,18 @@
             <div class="avatar lg" id="recAvatar"></div>
             <div class="confirm-info">
               <div class="cname" id="recName"></div>
-              <div class="cmeta" id="recMeta"></div>
+              <div class="cmeta" id="recKana"></div>
+              <div class="cident" id="recIdent"></div>
+              <div class="cwarn" id="recDup"></div>
               <span class="slotpill" id="recSlotPill"></span>
             </div>
           </div>
           <p class="confirm-note">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16h.01"/></svg>
-            お名前と顔写真を確認してください
+            お名前・生年月日・部屋番号を確認してください
           </p>
+
+          <div class="noticebox" id="recNotices"></div>
 
           <div class="refpanel" id="recRefPanel">
             <div class="refpanel-head">
@@ -740,6 +854,7 @@
 
           <div class="bigactions">
             <button class="btn-primary" onclick="recordTaken()">服薬を記録する</button>
+            <p class="warnnote" id="recWarn" style="display:none">未確認の見本があります（このまま記録できます）</p>
             <button class="btn-refuse" onclick="toggleReasons()">飲めなかった／拒否</button>
           </div>
 
@@ -775,6 +890,10 @@
               <input id="mKana" type="text" placeholder="例：なかむら はなこ">
             </div>
             <div class="field">
+              <div class="flabel">生年月日</div>
+              <input id="mBirth" type="text" placeholder="例：1940/05/21">
+            </div>
+            <div class="field">
               <div class="flabel">部屋番号</div>
               <input id="mRoom" type="text" placeholder="例：303">
             </div>
@@ -797,7 +916,7 @@
             </div>
           </div>
           <div class="mlist" id="masterList"></div>
-          <p class="facefoot">アバターはデモ表示です。※実運用では顔写真</p>
+          <p class="facefoot">アバターは識別用の色ラベルです（デモ表示）</p>
         </div>
         <nav class="bottomnav">
           <button class="navbtn" onclick="go('home')">
@@ -831,7 +950,112 @@
           <div class="refsec-title">お薬の見本写真</div>
           <div class="refsec-sub">服薬記録のときに表示され、手元の薬包と見比べる目安になります</div>
           <div id="refRows"></div>
+
+          <div class="extrasec">
+            <div class="refsec-title">その他の用法</div>
+            <div class="refsec-sub">頓用・外用・起床時など、決まった時間帯にあてはまらないお薬</div>
+            <div id="extraRows"></div>
+            <button class="btn-addshoot" id="exAddBtn" onclick="toggleExtraForm()">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+              用法を追加
+            </button>
+            <div class="shootform" id="exForm">
+              <div class="sflabel">用法のラベル</div>
+              <input class="sf-note" id="exLabel" type="text" placeholder="例：頓用（痛み止め）">
+              <div class="sflabel">種別</div>
+              <div class="timingseg" id="exKindSeg"></div>
+              <div id="exTimeWrap" style="display:none">
+                <div class="sflabel">時刻</div>
+                <input class="sf-note" id="exTime" type="text" placeholder="例：6:00">
+              </div>
+              <div class="sflabel">メモ <span class="opt" style="font-weight:500">任意</span></div>
+              <input class="sf-note" id="exNote" type="text" placeholder="例：痛み時 錠剤1（1日2回まで）">
+              <div class="sflabel">出所</div>
+              <div class="timingseg" id="exSrcSeg"></div>
+              <div class="shootform-actions">
+                <button type="button" class="btn-ghost" onclick="toggleExtraForm()">キャンセル</button>
+                <button type="button" class="btn-shootgo" onclick="saveExtra()">撮影して登録</button>
+              </div>
+            </div>
+          </div>
+
           <p class="refsec-foot">処方が変わったときは見本写真を撮り直してください</p>
+        </div>
+      </section>
+
+      <!-- Screen 6: その他の用法 一覧 -->
+      <section class="screen" id="sc-extras">
+        <div class="sc-head">
+          <button class="backbtn" onclick="go('home')" aria-label="戻る">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+          </button>
+          <div>
+            <div class="sc-title">その他の用法</div>
+            <div class="sc-sub" id="extrasSub"></div>
+          </div>
+        </div>
+        <div class="sc-body">
+          <div id="extrasList"></div>
+        </div>
+      </section>
+
+      <!-- Screen 7: その他の用法 記録 -->
+      <section class="screen" id="sc-exrecord">
+        <div class="sc-head">
+          <button class="backbtn" onclick="go('extras')" aria-label="一覧に戻る">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+          </button>
+          <div class="sc-title">その他の用法の記録</div>
+        </div>
+        <div class="sc-body">
+          <div class="confirm-card">
+            <div class="avatar lg" id="exrAvatar"></div>
+            <div class="confirm-info">
+              <div class="cname" id="exrName"></div>
+              <div class="cmeta" id="exrKana"></div>
+              <div class="cident" id="exrIdent"></div>
+              <div class="cwarn" id="exrDup"></div>
+              <span class="slotpill" id="exrPill"></span>
+            </div>
+          </div>
+          <p class="confirm-note">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16h.01"/></svg>
+            お名前・生年月日・部屋番号を確認してください
+          </p>
+
+          <div class="noticebox" id="exrNotices"></div>
+
+          <div class="refpanel" id="exrRefPanel">
+            <div class="refpanel-head"></div>
+            <div class="refpanel-body" id="exrRefBody"></div>
+          </div>
+
+          <div class="field">
+            <div class="flabel">実施者</div>
+            <div class="segment" id="exStaffSeg">
+              <button class="segbtn" aria-pressed="true" onclick="pickStaff(this,'佐藤')">佐藤<small>看護師</small></button>
+              <button class="segbtn" aria-pressed="false" onclick="pickStaff(this,'田村')">田村<small>介護士</small></button>
+              <button class="segbtn" aria-pressed="false" onclick="pickStaff(this,'山下')">山下<small>介護士</small></button>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="flabel">薬包・使用場面を撮影 <span class="opt">任意</span></div>
+            <button class="photobtn" onclick="addPhotoEx()">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.4"/></svg>
+              写真を追加
+            </button>
+            <div class="thumbs" id="exThumbs"></div>
+          </div>
+
+          <div class="field">
+            <div class="flabel">コメント <span class="opt">任意</span></div>
+            <textarea class="comment" id="exrComment" placeholder="例：腰の痛み訴えあり"></textarea>
+          </div>
+
+          <div class="bigactions">
+            <button class="btn-primary" onclick="recordExtra()">使用を記録する</button>
+          </div>
         </div>
       </section>
     </div>
@@ -846,11 +1070,19 @@
         <div class="filters">
           <div class="fgroup">
             <label for="fFacility">施設</label>
-            <select id="fFacility"><option>さくら苑</option></select>
+            <select id="fFacility" onchange="renderPharma()"><option>さくら苑</option></select>
           </div>
           <div class="fgroup">
-            <label for="fDate">日付</label>
-            <input id="fDate" type="date" value="2026-07-03">
+            <label for="fResident">入居者</label>
+            <select id="fResident" onchange="renderPharma()"><option value="all">すべて</option></select>
+          </div>
+          <div class="fgroup">
+            <label for="fFrom">開始日</label>
+            <input id="fFrom" type="date" value="2026-07-01" onchange="renderPharma()">
+          </div>
+          <div class="fgroup">
+            <label for="fTo">終了日</label>
+            <input id="fTo" type="date" value="2026-07-03" onchange="renderPharma()">
           </div>
           <div class="fgroup">
             <label for="fSlot">時間帯</label>
@@ -860,6 +1092,7 @@
               <option value="hiru">昼</option>
               <option value="yu">夕</option>
               <option value="neru">就寝前</option>
+              <option value="extra">その他用法</option>
             </select>
           </div>
           <button class="copybtn" onclick="copyRecords()">
@@ -867,17 +1100,30 @@
             記録をコピー
           </button>
         </div>
+        <div class="psend">
+          <div class="psend-title">施設への連絡</div>
+          <div class="psend-row">
+            <div class="fgroup">
+              <label for="nTarget">宛先</label>
+              <select id="nTarget"><option value="all">施設全体</option></select>
+            </div>
+            <textarea id="nText" placeholder="例：7/7(月)に処方変更あり：〇〇さん 朝の錠剤が1→2錠になります"></textarea>
+            <button class="btn-send" onclick="sendNotice()">送信</button>
+          </div>
+          <div class="sentlist" id="sentList"></div>
+        </div>
         <div class="summary" id="pharmaSummary"></div>
         <div class="tablewrap">
           <table class="ptable">
             <thead>
               <tr>
-                <th>時刻</th><th>入居者</th><th>時間帯</th><th>状態</th><th>実施者</th><th>コメント</th><th>写真</th>
+                <th>日付・時刻</th><th>時間帯</th><th>状態</th><th>確認した見本</th><th>実施者</th><th>コメント</th><th>写真</th>
               </tr>
             </thead>
             <tbody id="pharmaBody"></tbody>
           </table>
         </div>
+        <div class="pempty" id="pharmaEmpty" style="display:none">該当する記録はありません</div>
       </div>
     </div>
   </div>
@@ -925,49 +1171,76 @@
   };
   var TIMING_ORDER = ["before","after","between","none"];
 
+  // ---------- 見本写真の出所 ----------
+  var SOURCES = { pharmacy:"薬局", other:"他院・持参薬" };
+  var SOURCE_ORDER = ["pharmacy","other"];
+
+  // ---------- その他の用法（頓用・外用・起床時・指定時刻） ----------
+  var KINDS = { prn:"頓用", topical:"外用", wake:"起床時", timed:"指定時刻" };
+  var KIND_ORDER = ["prn","topical","wake","timed"];
+
+  // ---------- demo dates ----------
+  var DATES = ["7/1","7/2","7/3"];
+  var TODAY = "7/3";
+  var DATE_ISO = { "7/1":"2026-07-01", "7/2":"2026-07-02", "7/3":"2026-07-03" };
+  var WEEK = ["日","月","火","水","木","金","土"];
+
   // avatar hues per resident (calm, distinct)
   var AV_COLORS = ["#4B7B72","#7A5C86","#9A6B3F","#3F6D9A","#87614E","#5E8A57","#8A5A6B","#556B8A","#6E7A45","#7D6A9A","#4A8080","#96604A"];
+
+  var STAFFS = ["佐藤","田村","山下"];
 
   // ---------- demo residents ----------
   // states per slot: 'taken' | 'pending' | 'refused'
   // sched: {asa,hiru,yu,neru} — その入居者に服薬のある時間帯
   function sch(a,h,y,n){ return { asa:a, hiru:h, yu:y, neru:n }; }
   var residents = [
-    { id:1,  name:"鈴木 太郎", kana:"すずき たろう", room:"101", caution:"", initial:"鈴", schedule:sch(1,1,1,0) },
-    { id:2,  name:"佐藤 ハナ", kana:"さとう はな",   room:"102", caution:"粉砕して服用", initial:"佐", schedule:sch(1,1,1,0) },
-    { id:3,  name:"田中 一郎", kana:"たなか いちろう", room:"103", caution:"", initial:"田", schedule:sch(1,0,0,0) },
-    { id:4,  name:"山本 キヨ", kana:"やまもと きよ",  room:"105", caution:"", initial:"山", schedule:sch(1,1,1,1) },
-    { id:5,  name:"渡辺 茂",   kana:"わたなべ しげる", room:"106", caution:"とろみ付き", initial:"渡", schedule:sch(1,1,1,0) },
-    { id:6,  name:"伊藤 フミ", kana:"いとう ふみ",    room:"201", caution:"", initial:"伊", schedule:sch(1,1,1,0) },
-    { id:7,  name:"小林 勝",   kana:"こばやし まさる", room:"202", caution:"", initial:"小", schedule:sch(1,0,1,0) },
-    { id:8,  name:"加藤 ヨシ子", kana:"かとう よしこ", room:"203", caution:"", initial:"加", schedule:sch(1,1,1,0) },
-    { id:9,  name:"吉田 正",   kana:"よしだ ただし",  room:"205", caution:"", initial:"吉", schedule:sch(1,1,1,0) },
-    { id:10, name:"松本 トメ", kana:"まつもと とめ",  room:"206", caution:"", initial:"松", schedule:sch(1,1,1,0) },
-    { id:11, name:"井上 清",   kana:"いのうえ きよし", room:"301", caution:"", initial:"井", schedule:sch(1,0,1,0) },
-    { id:12, name:"木村 ミツ", kana:"きむら みつ",    room:"302", caution:"", initial:"木", schedule:sch(1,1,0,0) }
+    { id:1,  name:"鈴木 太郎", kana:"すずき たろう", birth:"1938/04/12", room:"101", caution:"", initial:"鈴", schedule:sch(1,1,1,0) },
+    { id:2,  name:"佐藤 ハナ", kana:"さとう はな",   birth:"1934/11/03", room:"102", caution:"粉砕して服用", initial:"佐", schedule:sch(1,1,1,0) },
+    { id:3,  name:"田中 一郎", kana:"たなか いちろう", birth:"1941/02/27", room:"103", caution:"", initial:"田", schedule:sch(1,0,0,0) },
+    { id:4,  name:"山本 キヨ", kana:"やまもと きよ",  birth:"1932/08/09", room:"105", caution:"", initial:"山", schedule:sch(1,1,1,1) },
+    { id:5,  name:"渡辺 茂",   kana:"わたなべ しげる", birth:"1936/06/18", room:"106", caution:"とろみ付き", initial:"渡", schedule:sch(1,1,1,0) },
+    { id:6,  name:"伊藤 フミ", kana:"いとう ふみ",    birth:"1939/01/25", room:"201", caution:"", initial:"伊", schedule:sch(1,1,1,0) },
+    { id:7,  name:"小林 勝",   kana:"こばやし まさる", birth:"1940/09/30", room:"202", caution:"", initial:"小", schedule:sch(1,0,1,0) },
+    { id:8,  name:"加藤 ヨシ子", kana:"かとう よしこ", birth:"1935/03/14", room:"203", caution:"", initial:"加", schedule:sch(1,1,1,0) },
+    { id:9,  name:"吉田 正",   kana:"よしだ ただし",  birth:"1937/12/05", room:"205", caution:"", initial:"吉", schedule:sch(1,1,1,0) },
+    { id:10, name:"松本 トメ", kana:"まつもと とめ",  birth:"1931/07/22", room:"206", caution:"", initial:"松", schedule:sch(1,1,1,0) },
+    { id:11, name:"井上 清",   kana:"いのうえ きよし", birth:"1942/05/08", room:"301", caution:"", initial:"井", schedule:sch(1,0,1,0) },
+    { id:12, name:"木村 ミツ", kana:"きむら みつ",    birth:"1933/10/16", room:"302", caution:"", initial:"木", schedule:sch(1,1,0,0) },
+    { id:13, name:"鈴木 太郎", kana:"すずき たろう",  birth:"1945/03/29", room:"304", caution:"", initial:"鈴", schedule:sch(1,1,0,0) }
   ];
   residents.forEach(function(r,i){ r.color = AV_COLORS[i % AV_COLORS.length]; });
   function hasSlot(r, slot){ return !!(r.schedule && r.schedule[slot]); }
+  function byId(id){ return residents.find(function(x){ return x.id===id; }); }
+
+  // 同姓同名の判定（デモ：鈴木 太郎 が 101 と 304 の2名）
+  function plainName(n){ return String(n||"").replace(/\s/g,""); }
+  function isDup(r){
+    var n = plainName(r.name);
+    return residents.filter(function(x){ return plainName(x.name)===n; }).length > 1;
+  }
+  function dupHtml(r){ return isDup(r) ? '<span class="rwarn">同姓同名あり</span>' : ""; }
 
   // ---------- reference (見本) meds per resident × slot ----------
-  // refMeds[id] = { asa:[{timing,note,updated}, ...], hiru:[...], yu:[...], neru:[...] }
-  // 各要素 = 見本写真1枚。timing は before|after|between|none
+  // refMeds[id] = { asa:[{timing,note,updated,source}, ...], hiru:[...], yu:[...], neru:[...] }
+  // 各要素 = 見本写真1枚。timing は before|after|between|none / source は pharmacy|other
   function emptyRef(){
     return { asa:[], hiru:[], yu:[], neru:[] };
   }
   // add one sample photo to a resident×slot
-  function addRef(id, slot, timing, note, updated){
-    var r = residents.find(function(x){ return x.id===id; });
-    r.refMeds[slot].push({ timing:timing, note:note, updated:updated });
+  function addRef(id, slot, timing, note, updated, source){
+    var r = byId(id);
+    r.refMeds[slot].push({ timing:timing, note:note, updated:updated, source:source||"pharmacy" });
   }
   function slotHasSamples(r, slot){ return r.refMeds[slot] && r.refMeds[slot].length>0; }
-  residents.forEach(function(r){ r.refMeds = emptyRef(); });
+  residents.forEach(function(r){ r.refMeds = emptyRef(); r.extras = []; });
   // demo registrations (就寝前は少数・数名は全時間帯未登録のまま、複数枚の例を2名以上)
-  addRef(1, "asa", "after",  "白い錠剤2・カプセル（茶）1", "6/28");   // 鈴木 太郎
+  addRef(1, "asa", "after",  "白い錠剤2・カプセル（茶）1", "6/28");   // 鈴木 太郎（101）
   addRef(1, "yu",  "after",  "白い錠剤1", "6/28");
   addRef(2, "asa", "before", "粉薬1包（粉砕指示）", "6/30");          // 佐藤 ハナ（朝2枚）
   addRef(2, "asa", "after",  "錠剤2", "6/30");
   addRef(2, "hiru","after",  "粉薬1包", "6/30");
+  addRef(3, "asa", "none",   "他院処方 白い錠剤1（整形外科）", "7/1", "other"); // 田中 一郎・持参薬
   addRef(5, "asa", "after",  "錠剤3（とろみ服用）", "6/29");          // 渡辺 茂
   addRef(4, "asa", "before", "胃薬1包", "6/25");                     // 山本 キヨ（朝2枚）
   addRef(4, "asa", "after",  "錠剤2", "6/25");
@@ -975,14 +1248,26 @@
   addRef(7, "asa", "after",  "白い錠剤1・黄色い錠剤1", "6/27");       // 小林 勝
   addRef(7, "yu",  "after",  "白い錠剤1", "6/27");
   addRef(10,"asa", "after",  "錠剤1・粉薬1包", "7/1");                // 松本 トメ
-  // 未登録のまま: 田中一郎(3)・伊藤フミ(6)・加藤ヨシ子(8)・吉田正(9)・井上清(11)・木村ミツ(12)
+  addRef(13,"asa", "after",  "錠剤1", "7/1");                        // 鈴木 太郎（304）
+  // 未登録のまま: 伊藤フミ(6)・加藤ヨシ子(8)・吉田正(9)・井上清(11)・木村ミツ(12)
 
-  // records[slot] = { residentId: {state, staff, time, comment, hasPhoto, reason} }
-  // Seed: 朝 = 済9・未実施2・拒否1 (現実的な混在)
-  var records = { asa:{}, hiru:{}, yu:{}, neru:{} };
+  // ---------- その他の用法（頓用・外用・起床時・指定時刻） ----------
+  function addExtra(id, ex){ byId(id).extras.push(ex); }
+  addExtra(5,  { label:"頓用（痛み止め）", kind:"prn",     note:"痛み時 錠剤1（1日2回まで）", source:"pharmacy", updated:"6/29" });
+  addExtra(10, { label:"外用（湿布）",     kind:"topical", note:"腰に1日1枚",                 source:"pharmacy", updated:"7/1" });
+  addExtra(4,  { label:"起床時",           kind:"wake", time:"6:00", note:"錠剤1",           source:"pharmacy", updated:"6/25" });
+
+  // ---------- records ----------
+  // recordsByDate[date][slot] = { residentId: {state, staff, time, comment, hasPhoto, reason, confirmed:[見本index]} }
+  // recordsByDate[date].extras = [ {residentId, extraIndex, time, staff, comment, hasPhoto} ]
+  var recordsByDate = {};
+  DATES.forEach(function(d){ recordsByDate[d] = { asa:{}, hiru:{}, yu:{}, neru:{}, extras:[] }; });
+  var records = recordsByDate[TODAY];   // 施設スタッフ側は常に「今日」を扱う
+
+  function allSampleIdx(r, sl){ return (r.refMeds[sl]||[]).map(function(_,i){ return i; }); }
 
   function seed(slot, id, state, extra){
-    records[slot][id] = Object.assign({ state:state, staff:"", time:"", comment:"", hasPhoto:false, reason:"" }, extra||{});
+    records[slot][id] = Object.assign({ state:state, staff:"", time:"", comment:"", hasPhoto:false, reason:"", confirmed:[] }, extra||{});
   }
   // 朝: 済9・未実施2・拒否1 (全員 朝あり)。id 8,12 未実施、5 拒否
   var asaTaken = [
@@ -994,14 +1279,19 @@
     [7,"山下","8:36","水分多めで",false],
     [9,"山下","8:41","",true],
     [10,"田村","8:45","",false],
-    [11,"佐藤","8:50","",true]
+    [11,"佐藤","8:50","",true],
+    [13,"田村","8:55","",false]
   ];
-  asaTaken.forEach(function(a){ seed("asa",a[0],"taken",{staff:a[1],time:a[2],comment:a[3],hasPhoto:a[4]}); });
+  asaTaken.forEach(function(a){
+    seed("asa",a[0],"taken",{staff:a[1],time:a[2],comment:a[3],hasPhoto:a[4],confirmed:allSampleIdx(byId(a[0]),"asa")});
+  });
   seed("asa",5,"refused",{staff:"佐藤",time:"8:28",reason:"体調不良",comment:"朝から食欲なし",hasPhoto:false});
   seed("asa",8,"pending");
   seed("asa",12,"pending");
   // 昼: 一部済（昼ありの入居者のみ）。id 3,7,11 は昼なしなので記録なし
-  [[1,"田村","12:20","",false],[6,"山下","12:31","",false],[9,"山下","12:36","",false]].forEach(function(a){ seed("hiru",a[0],"taken",{staff:a[1],time:a[2],comment:a[3],hasPhoto:a[4]}); });
+  [[1,"田村","12:20","",false],[6,"山下","12:31","",false],[9,"山下","12:36","",false]].forEach(function(a){
+    seed("hiru",a[0],"taken",{staff:a[1],time:a[2],comment:a[3],hasPhoto:a[4],confirmed:allSampleIdx(byId(a[0]),"hiru")});
+  });
   // 夕 & 就寝前: すべて未実施
   // 全時間帯: schedule ON の入居者のみ pending で埋める（OFF は記録を作らない）
   ["hiru","yu","neru"].forEach(function(sl){
@@ -1009,16 +1299,70 @@
       if(hasSlot(r,sl) && !records[sl][r.id]) seed(sl,r.id,"pending");
     });
   });
+  // 今日のその他用法の記録（デモ2件）
+  records.extras.push({ residentId:4, extraIndex:0, time:"6:05",  staff:"山下", comment:"", hasPhoto:false });
+  records.extras.push({ residentId:5, extraIndex:0, time:"10:20", staff:"佐藤", comment:"腰の痛み訴えあり", hasPhoto:true });
+
+  // ---------- 過去日（7/1・7/2）のデモ記録 ----------
+  function pastTime(sl, id){
+    var base = { asa:8*60, hiru:12*60+10, yu:18*60, neru:20*60+30 }[sl];
+    var m = base + ((id*7) % 46);
+    return Math.floor(m/60) + ":" + String(m%60).padStart(2,"0");
+  }
+  function seedPastDay(date, refusals){
+    var bucket = recordsByDate[date];
+    SLOT_ORDER.forEach(function(sl){
+      residents.forEach(function(r){
+        if(!hasSlot(r,sl)) return;
+        bucket[sl][r.id] = {
+          state:"taken", staff:STAFFS[(r.id + SLOT_ORDER.indexOf(sl)) % 3],
+          time:pastTime(sl, r.id), comment:"", hasPhoto:(r.id % 4 === 0),
+          reason:"", confirmed:allSampleIdx(r, sl)
+        };
+      });
+    });
+    (refusals||[]).forEach(function(x){
+      var id = x[0], sl = x[1];
+      if(!bucket[sl][id]) return;
+      bucket[sl][id] = { state:"refused", staff:x[3]||"佐藤", time:pastTime(sl,id), comment:x[4]||"", hasPhoto:false, reason:x[2], confirmed:[] };
+    });
+  }
+  seedPastDay("7/1", [[8,"yu","拒否","田村","声かけ続けたが服用せず"],[12,"asa","体調不良","佐藤",""]]);
+  seedPastDay("7/2", [[5,"hiru","外出中","山下","家族と受診のため"]]);
+  recordsByDate["7/1"].extras.push({ residentId:4, extraIndex:0, time:"6:02", staff:"佐藤", comment:"", hasPhoto:false });
+  recordsByDate["7/2"].extras.push({ residentId:4, extraIndex:0, time:"6:08", staff:"田村", comment:"", hasPhoto:false });
+  recordsByDate["7/2"].extras.push({ residentId:10, extraIndex:0, time:"9:05", staff:"田村", comment:"貼付部位に発赤なし", hasPhoto:false });
 
   function getState(slot,id){ return records[slot][id] || {state:"pending"}; }
+
+  // ---------- 薬局からの連絡 ----------
+  var notices = [
+    { id:1, target:"all", text:"7/7(月)に処方変更あり：鈴木太郎さん（101）朝の錠剤が1→2錠になります", date:"7/3", author:"薬局 田村", readBy:[] },
+    { id:2, target:4,     text:"月1回製剤（骨粗鬆症）次回服用日 7/15", date:"7/2", author:"薬局 田村", readBy:[{ staff:"佐藤", at:"7/2 16:40" }] },
+    { id:3, target:5,     text:"お預かり薬の残り 約5日分。次回受診 7/8", date:"7/1", author:"薬局 田村", readBy:[] }
+  ];
+  var noticeSeq = 3;
+  function isRead(n){ return n.readBy.length > 0; }
+  function noticeTargetLabel(n){
+    if(n.target==="all") return "施設全体";
+    var r = byId(n.target);
+    return r ? r.name + "さん（" + r.room + "）" : "—";
+  }
+  function noticesFor(residentId){
+    return notices.filter(function(n){ return n.target==="all" || n.target===residentId; });
+  }
+  function unreadCount(){ return notices.filter(function(n){ return !isRead(n); }).length; }
 
   // ---------- navigation state ----------
   var currentSlot = "asa";
   var currentResidentId = null;
   var pickedStaff = "佐藤";
   var photoCount = 0;
+  var exPhotoCount = 0;
+  var recConfirmed = [];       // 見本ごとの「飲ませた」チェック状態
+  var exCurrent = { id:null, idx:null };
 
-  var screens = { home:"sc-home", list:"sc-list", record:"sc-record", master:"sc-master", mdetail:"sc-mdetail" };
+  var screens = { home:"sc-home", list:"sc-list", record:"sc-record", master:"sc-master", mdetail:"sc-mdetail", extras:"sc-extras", exrecord:"sc-exrecord" };
   function go(name){
     Object.keys(screens).forEach(function(k){
       document.getElementById(screens[k]).classList.toggle("active", k===name);
@@ -1027,6 +1371,7 @@
     if(name==="list") renderList();
     if(name==="master") renderMaster();
     if(name==="mdetail") renderMdetail();
+    if(name==="extras") renderExtras();
     window.scrollTo(0,0);
   }
   window.go = go;
@@ -1041,6 +1386,23 @@
     window.scrollTo(0,0);
   }
   window.setRole = setRole;
+
+  function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+
+  var CHEVRON = '<span class="chevron"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span>';
+  var CHECK_SVG = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
+
+  // timing chip html (表示のみ)
+  function timingChip(timing){
+    var t = timing || "none";
+    var cls = t==="none" ? "tchip none" : "tchip";
+    return '<span class="'+cls+'">'+TIMINGS[t]+'</span>';
+  }
+  function srcNote(source){
+    var s = source==="other" ? "other" : "pharmacy";
+    return '<span class="srcnote'+(s==="other"?" other":"")+'">'+SOURCES[s]+'</span>';
+  }
+  function kindChip(kind){ return '<span class="kchip">'+(KINDS[kind]||"その他")+'</span>'; }
 
   // ---------- Home ----------
   function slotResidents(slot){
@@ -1057,6 +1419,7 @@
   }
 
   function renderHome(){
+    renderHomeNotices();
     var grid = document.getElementById("slotGrid");
     grid.innerHTML = "";
     SLOT_ORDER.forEach(function(key){
@@ -1074,11 +1437,66 @@
           '<span class="slot-mark" style="background:'+s.color+'"></span>'+
           '<div class="slot-main"><div class="slot-name">'+s.name+'</div><div class="slot-time">'+s.time+'</div></div>'+
           stat+
-          '<span class="chevron"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span>'+
+          CHEVRON+
         '</div>'+
         '<div class="slot-foot"><div class="slot-track"><i style="width:'+pct+'%"></i></div><span class="slot-count">'+p.done+' / '+p.total+'</span></div>';
       grid.appendChild(btn);
     });
+
+    // その他の用法（未実施カウントには含めない）
+    var ex = document.createElement("button");
+    ex.className = "slot extra";
+    ex.onclick = function(){ go("extras"); };
+    ex.innerHTML =
+      '<div class="slot-row">'+
+        '<span class="slot-mark" style="background:var(--faint)"></span>'+
+        '<div class="slot-main"><div class="slot-name">その他の用法</div><div class="slot-time">頓用・外用・起床時など</div></div>'+
+        '<span class="slot-count">今日 '+records.extras.length+'件記録</span>'+
+        CHEVRON+
+      '</div>';
+    grid.appendChild(ex);
+  }
+
+  function renderHomeNotices(){
+    var box = document.getElementById("homeNotices");
+    if(notices.length===0){ box.innerHTML = ""; return; }
+    var un = unreadCount();
+    var head = '<div class="noticehead">薬局からの連絡'+(un>0 ? '<span class="unread">未読 '+un+'件</span>' : '<span>すべて確認済み</span>')+'</div>';
+    function itemHtml(n){
+      var read = isRead(n);
+      var foot = read
+        ? '<div class="nmeta">既読 '+esc(n.readBy[0].staff)+' '+esc(n.readBy[0].at)+'</div>'
+        : '<button class="nack" data-nid="'+n.id+'">確認しました</button>';
+      return '<div class="noticeitem'+(read?" read":"")+'">'+
+        '<div class="ntext">'+esc(n.text)+'</div>'+
+        '<div class="nmeta">'+esc(n.author)+' ・ '+esc(n.date)+' ・ 宛先: '+esc(noticeTargetLabel(n))+'</div>'+
+        foot+
+      '</div>';
+    }
+    // 未読は常に表示、既読は畳む（ホームの主役＝時間帯行を押し下げないため）
+    var unreadItems = notices.filter(function(n){ return !isRead(n); }).map(itemHtml).join("");
+    var readList = notices.filter(isRead);
+    var readBlock = "";
+    if(readList.length){
+      readBlock = '<button class="nmore" id="noticeMore">確認済み '+readList.length+'件を'+(homeNoticesExpanded?"隠す":"表示")+'</button>'+
+        (homeNoticesExpanded ? '<div class="noticeread">'+readList.map(itemHtml).join("")+'</div>' : "");
+    }
+    box.innerHTML = head + unreadItems + readBlock;
+    box.querySelectorAll(".nack").forEach(function(b){
+      b.onclick = function(){ ackNotice(+b.getAttribute("data-nid")); };
+    });
+    var more = document.getElementById("noticeMore");
+    if(more) more.onclick = function(){ homeNoticesExpanded = !homeNoticesExpanded; renderHomeNotices(); };
+  }
+  var homeNoticesExpanded = false;
+
+  function ackNotice(id){
+    var n = notices.find(function(x){ return x.id===id; });
+    if(!n || isRead(n)) return;
+    n.readBy.push({ staff:pickedStaff, at:TODAY + " " + demoTime() });
+    renderHomeNotices();
+    if(document.getElementById("sc-record").classList.contains("active")) renderRecNotices(currentResidentId, "recNotices");
+    showToast("確認しました", pickedStaff + " ・ 薬局からの連絡");
   }
 
   function openSlot(key){
@@ -1123,29 +1541,44 @@
       btn.onclick = function(){ openRecord(r.id); };
       btn.innerHTML =
         '<span class="avatar" style="background:'+r.color+'">'+r.initial+'</span>'+
-        '<span class="rinfo"><span class="rname">'+r.name+'</span>'+
-        '<span class="rmeta">'+r.room+'号室</span></span>'+
+        '<span class="rinfo"><span class="rname">'+esc(r.name)+'</span>'+
+        '<span class="rmeta">'+r.room+'号室 ・ '+esc(r.birth||"")+'</span>'+
+        dupHtml(r)+
+        '</span>'+
         chip+
-        '<span class="chevron"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span>';
+        CHEVRON;
       wrap.appendChild(btn);
     });
   }
   window.renderList = renderList;
 
   // ---------- Record screen ----------
+  function identLine(r){ return "生年月日 " + esc(r.birth||"—") + " ・ " + esc(r.room) + "号室"; }
+  function warnLines(r){
+    var out = "";
+    if(r.caution) out += '<div>注意: '+esc(r.caution)+'</div>';
+    if(isDup(r)) out += '<div>同姓同名あり（生年月日・部屋番号を必ず確認）</div>';
+    return out;
+  }
+
   function openRecord(id){
     currentResidentId = id;
-    var r = residents.find(function(x){ return x.id===id; });
+    var r = byId(id);
     var s = SLOTS[currentSlot];
+    var st = getState(currentSlot, id);
+
     document.getElementById("recAvatar").textContent = r.initial;
     document.getElementById("recAvatar").style.background = r.color;
     document.getElementById("recName").textContent = r.name;
-    document.getElementById("recMeta").textContent = r.room + "号室" + (r.caution ? " ・ " + r.caution : "");
+    document.getElementById("recKana").textContent = r.kana || "";
+    document.getElementById("recIdent").innerHTML = identLine(r);
+    document.getElementById("recDup").innerHTML = warnLines(r);
     var pill = document.getElementById("recSlotPill");
     pill.textContent = s.name + " " + s.time;
     pill.style.color = s.color;
 
-    renderRecordRef(r, currentSlot);
+    renderRecNotices(id, "recNotices");
+    renderRecordRef(r, currentSlot, (st.state==="taken" && st.confirmed) ? st.confirmed : []);
 
     // reset form (実施者は直前の選択を保持 — 同じ職員が連続記録する現場動線のため)
     var segs = document.querySelectorAll("#staffSeg .segbtn");
@@ -1157,7 +1590,6 @@
     document.querySelectorAll("#reasonGrid .reasonbtn").forEach(function(b){ b.classList.remove("sel"); });
 
     // prefill from existing record when re-visiting
-    var st = getState(currentSlot, id);
     if(st.state==="taken" || st.state==="refused"){
       pickedStaff = st.staff || "佐藤";
       segs.forEach(function(b){ b.setAttribute("aria-pressed", b.textContent.indexOf(pickedStaff)===0 ? "true":"false"); });
@@ -1168,8 +1600,19 @@
   }
   window.openRecord = openRecord;
 
+  // 記録画面上部：その入居者宛＋全体宛の未読通知
+  function renderRecNotices(residentId, elId){
+    var box = document.getElementById(elId);
+    var list = noticesFor(residentId).filter(function(n){ return !isRead(n); });
+    if(list.length===0){ box.innerHTML = ""; return; }
+    box.innerHTML = list.map(function(n){
+      return '<div class="noticeline"><div class="ntext">'+esc(n.text)+'</div>'+
+        '<span class="nmeta">'+esc(n.author)+' ・ '+esc(n.date)+' ・ 宛先: '+esc(noticeTargetLabel(n))+'</span></div>';
+    }).join("");
+  }
+
   // reference-meds panel on the record screen (表示のみ・自動判定/警告なし)
-  function renderRecordRef(r, slot){
+  function renderRecordRef(r, slot, preConfirmed){
     var head = document.getElementById("recRefPanel").querySelector(".refpanel-head");
     var s = SLOTS[slot];
     head.innerHTML =
@@ -1177,12 +1620,18 @@
       'この時間帯（'+s.name+'）のお薬（見本）';
     var arr = r.refMeds[slot] || [];
     var body = document.getElementById("recRefBody");
+    recConfirmed = arr.map(function(_,i){ return (preConfirmed||[]).indexOf(i) >= 0; });
+
     if(arr.length>0){
-      var samples = arr.map(function(ref){
+      var samples = arr.map(function(ref, i){
         return '<div class="refsample">'+
           '<div class="refphoto"><div class="pill"></div><div class="seam"></div></div>'+
           '<div class="refsample-chip">'+timingChip(ref.timing)+'</div>'+
           '<div class="refsample-note">'+esc(ref.note)+'</div>'+
+          '<div style="margin-top:4px">'+srcNote(ref.source)+'</div>'+
+          '<label class="samplecheck'+(recConfirmed[i]?" on":"")+'">'+
+            '<input type="checkbox" data-idx="'+i+'"'+(recConfirmed[i]?" checked":"")+' aria-label="'+esc(ref.note)+' を飲ませた">飲ませた'+
+          '</label>'+
         '</div>';
       }).join("");
       body.innerHTML =
@@ -1190,6 +1639,14 @@
           '<div class="refsamples">'+samples+'</div>'+
           '<div class="refhint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg><span>手元の薬包と見比べてください</span></div>'+
         '</div>';
+      body.querySelectorAll(".samplecheck input").forEach(function(cb){
+        cb.addEventListener("change", function(){
+          var i = +cb.getAttribute("data-idx");
+          recConfirmed[i] = cb.checked;
+          cb.closest(".samplecheck").classList.toggle("on", cb.checked);
+          updateRecWarn();
+        });
+      });
     } else {
       body.innerHTML =
         '<div class="refphoto empty"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.2"/><path d="M8 6l1.5-2h5L16 6"/></svg></div>'+
@@ -1198,58 +1655,71 @@
           '<button class="reflink" onclick="openMasterDetail('+r.id+')">入居者マスターから登録できます</button>'+
         '</div>';
     }
+    updateRecWarn();
   }
 
-  // timing chip html (表示のみ)
-  function timingChip(timing){
-    var t = timing || "none";
-    var cls = t==="none" ? "tchip none" : "tchip";
-    return '<span class="'+cls+'">'+TIMINGS[t]+'</span>';
+  function updateRecWarn(){
+    var w = document.getElementById("recWarn");
+    var pending = recConfirmed.length>0 && recConfirmed.some(function(v){ return !v; });
+    w.style.display = pending ? "" : "none";
   }
-  function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
 
   function pickStaff(btn, name){
     pickedStaff = name;
-    document.querySelectorAll("#staffSeg .segbtn").forEach(function(b){ b.setAttribute("aria-pressed", b===btn ? "true":"false"); });
+    var seg = btn.closest(".segment") || document.getElementById("staffSeg");
+    seg.querySelectorAll(".segbtn").forEach(function(b){ b.setAttribute("aria-pressed", b===btn ? "true":"false"); });
   }
   window.pickStaff = pickStaff;
 
-  function addPhoto(){
-    if(photoCount>=3) return;
-    photoCount++;
+  function makeThumb(containerId, dec){
     var t = document.createElement("div");
     t.className = "thumb";
     t.innerHTML = '<div class="pill"></div><div class="seam"></div><button class="rm" aria-label="削除">×</button>';
-    t.querySelector(".rm").onclick = function(ev){ ev.stopPropagation(); t.remove(); photoCount--; };
-    document.getElementById("thumbs").appendChild(t);
+    t.querySelector(".rm").onclick = function(ev){ ev.stopPropagation(); t.remove(); dec(); };
+    document.getElementById(containerId).appendChild(t);
+  }
+  function addPhoto(){
+    if(photoCount>=3) return;
+    photoCount++;
+    makeThumb("thumbs", function(){ photoCount--; });
   }
   window.addPhoto = addPhoto;
+  function addPhotoEx(){
+    if(exPhotoCount>=3) return;
+    exPhotoCount++;
+    makeThumb("exThumbs", function(){ exPhotoCount--; });
+  }
+  window.addPhotoEx = addPhotoEx;
 
   function toggleReasons(){
     document.getElementById("reasons").classList.toggle("show");
   }
   window.toggleReasons = toggleReasons;
 
-  function nowHM(){
-    var d = new Date();
-    return d.getHours() + ":" + String(d.getMinutes()).padStart(2,"0");
-  }
   // fixed demo "now" so seeded times stay consistent-looking
   function demoTime(){
-    // vary slightly around 14:02 for demo realism
     var base = 14*60 + 2 + Math.floor(Math.random()*4);
     return Math.floor(base/60) + ":" + String(base%60).padStart(2,"0");
+  }
+
+  function confirmedIdx(){
+    var out = [];
+    recConfirmed.forEach(function(v,i){ if(v) out.push(i); });
+    return out;
   }
 
   function recordTaken(){
     var id = currentResidentId;
     var t = demoTime();
+    var conf = confirmedIdx();
     records[currentSlot][id] = {
       state:"taken", staff:pickedStaff, time:t,
       comment:document.getElementById("recComment").value.trim(),
-      hasPhoto: photoCount>0, reason:""
+      hasPhoto: photoCount>0, reason:"", confirmed:conf
     };
-    showToast("記録しました", t + " 記録者:" + pickedStaff);
+    var meta = t + " 記録者:" + pickedStaff;
+    if(recConfirmed.length>0) meta += " ・ 確認 " + conf.length + "/" + recConfirmed.length;
+    showToast("記録しました", meta);
     go("list");
   }
   window.recordTaken = recordTaken;
@@ -1262,12 +1732,102 @@
     records[currentSlot][id] = {
       state:"refused", staff:pickedStaff, time:t,
       comment:document.getElementById("recComment").value.trim(),
-      hasPhoto: photoCount>0, reason:reason
+      hasPhoto: photoCount>0, reason:reason, confirmed:confirmedIdx()
     };
     showToast("拒否として記録しました", t + " 記録者:" + pickedStaff + " ・ " + reason);
     setTimeout(function(){ go("list"); }, 250);
   }
   window.recordRefused = recordRefused;
+
+  // ---------- その他の用法：一覧・記録 ----------
+  function extraCountToday(id, idx){
+    return records.extras.filter(function(e){ return e.residentId===id && e.extraIndex===idx; }).length;
+  }
+
+  function renderExtras(){
+    var wrap = document.getElementById("extrasList");
+    wrap.innerHTML = "";
+    document.getElementById("extrasSub").textContent = "頓用・外用・起床時など ・ 今日 " + records.extras.length + "件記録";
+    var any = false;
+    residents.forEach(function(r){
+      if(!r.extras || r.extras.length===0) return;
+      any = true;
+      var h = document.createElement("div");
+      h.className = "exgroup";
+      h.textContent = r.name + " ・ " + r.room + "号室";
+      wrap.appendChild(h);
+      r.extras.forEach(function(ex, i){
+        var cnt = extraCountToday(r.id, i);
+        var btn = document.createElement("button");
+        btn.className = "exrow";
+        btn.onclick = function(){ openExtraRecord(r.id, i); };
+        btn.innerHTML =
+          '<span class="avatar" style="background:'+r.color+'">'+r.initial+'</span>'+
+          '<span class="rinfo">'+
+            '<span class="rname">'+esc(ex.label)+'</span>'+
+            '<span class="rmeta">'+esc(ex.note||"")+(ex.time?" ・ "+esc(ex.time):"")+'</span>'+
+          '</span>'+
+          kindChip(ex.kind)+
+          (cnt>0 ? '<span class="chip done">今日 '+cnt+'件</span>' : '<span class="chip" style="color:var(--faint)">記録なし</span>')+
+          CHEVRON;
+        wrap.appendChild(btn);
+      });
+    });
+    if(!any){
+      wrap.innerHTML = '<p style="text-align:center;color:var(--sub);font-size:14px;padding:24px 0">その他の用法は登録されていません</p>';
+    }
+  }
+
+  function openExtraRecord(id, idx){
+    exCurrent = { id:id, idx:idx };
+    var r = byId(id), ex = r.extras[idx];
+    document.getElementById("exrAvatar").textContent = r.initial;
+    document.getElementById("exrAvatar").style.background = r.color;
+    document.getElementById("exrName").textContent = r.name;
+    document.getElementById("exrKana").textContent = r.kana || "";
+    document.getElementById("exrIdent").innerHTML = identLine(r);
+    document.getElementById("exrDup").innerHTML = warnLines(r);
+    var pill = document.getElementById("exrPill");
+    pill.textContent = ex.label + (ex.time ? " " + ex.time : "");
+    pill.style.color = "var(--sub)";
+
+    renderRecNotices(id, "exrNotices");
+
+    var head = document.getElementById("exrRefPanel").querySelector(".refpanel-head");
+    head.innerHTML =
+      '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M8 4v5"/></svg>'+
+      'この用法のお薬（見本）';
+    document.getElementById("exrRefBody").innerHTML =
+      '<div class="refphoto"><div class="pill"></div><div class="seam"></div></div>'+
+      '<div class="refinfo">'+
+        '<div class="sample-meta" style="margin-bottom:6px">'+kindChip(ex.kind)+srcNote(ex.source)+'</div>'+
+        '<div class="refnote">'+esc(ex.note || "（メモなし）")+'</div>'+
+        '<div class="refupdated">登録日 '+esc(ex.updated||"—")+(ex.time?' ・ '+esc(ex.time):'')+'</div>'+
+        '<div class="refhint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg><span>手元の薬包と見比べてください</span></div>'+
+      '</div>';
+
+    document.querySelectorAll("#exStaffSeg .segbtn").forEach(function(b){
+      b.setAttribute("aria-pressed", b.textContent.indexOf(pickedStaff)===0 ? "true":"false");
+    });
+    exPhotoCount = 0;
+    document.getElementById("exThumbs").innerHTML = "";
+    document.getElementById("exrComment").value = "";
+    go("exrecord");
+  }
+  window.openExtraRecord = openExtraRecord;
+
+  function recordExtra(){
+    var r = byId(exCurrent.id), ex = r.extras[exCurrent.idx];
+    var t = demoTime();
+    records.extras.push({
+      residentId: exCurrent.id, extraIndex: exCurrent.idx, time: t,
+      staff: pickedStaff, comment: document.getElementById("exrComment").value.trim(),
+      hasPhoto: exPhotoCount>0
+    });
+    showToast("使用を記録しました", ex.label + " ・ " + t + " 記録者:" + pickedStaff);
+    go("extras");
+  }
+  window.recordExtra = recordExtra;
 
   // ---------- Master ----------
   function toggleMForm(){
@@ -1276,9 +1836,8 @@
     f.classList.toggle("show", show);
     document.getElementById("masterAddBtn").style.display = show ? "none" : "";
     if(!show){
-      ["mName","mKana","mRoom","mCaution"].forEach(function(x){ document.getElementById(x).value=""; });
+      ["mName","mKana","mBirth","mRoom","mCaution"].forEach(function(x){ document.getElementById(x).value=""; });
     } else {
-      // reset schedule checkboxes to default (朝昼夕ON・就寝前OFF)
       document.querySelectorAll("#mSchedChecks input[type=checkbox]").forEach(function(cb){
         var def = cb.getAttribute("data-slot")!=="neru";
         cb.checked = def;
@@ -1298,7 +1857,8 @@
   function saveResident(){
     var name = document.getElementById("mName").value.trim();
     var room = document.getElementById("mRoom").value.trim();
-    if(!name || !room){ showToast("氏名と部屋番号を入力してください",""); return; }
+    var birth = document.getElementById("mBirth").value.trim();
+    if(!name || !room || !birth){ showToast("氏名・生年月日・部屋番号を入力してください",""); return; }
     var caution = document.getElementById("mCaution").value.trim();
     var id = Math.max.apply(null, residents.map(function(r){return r.id;})) + 1;
     var initial = name.replace(/\s/g,"").charAt(0);
@@ -1307,10 +1867,11 @@
     document.querySelectorAll("#mSchedChecks input[type=checkbox]").forEach(function(cb){
       schedule[cb.getAttribute("data-slot")] = cb.checked;
     });
-    var r = { id:id, name:name, kana:document.getElementById("mKana").value.trim(), room:room, caution:caution, initial:initial, color:color, schedule:schedule, refMeds:emptyRef() };
+    var r = { id:id, name:name, kana:document.getElementById("mKana").value.trim(), birth:birth, room:room,
+              caution:caution, initial:initial, color:color, schedule:schedule, refMeds:emptyRef(), extras:[] };
     residents.push(r);
     // new resident starts pending in scheduled slots only
-    SLOT_ORDER.forEach(function(sl){ if(schedule[sl]) records[sl][id] = {state:"pending",staff:"",time:"",comment:"",hasPhoto:false,reason:""}; });
+    SLOT_ORDER.forEach(function(sl){ if(schedule[sl]) records[sl][id] = {state:"pending",staff:"",time:"",comment:"",hasPhoto:false,reason:"",confirmed:[]}; });
     toggleMForm();
     renderMaster();
     showToast("入居者を追加しました", name + " ・ " + room + "号室");
@@ -1332,12 +1893,14 @@
       row.onclick = function(){ openMasterDetail(r.id); };
       row.innerHTML =
         '<span class="avatar" style="background:'+r.color+'">'+r.initial+'</span>'+
-        '<span class="rinfo"><span class="rname">'+r.name+'</span>'+
-        '<span class="rmeta">'+(r.kana||"")+' ・ '+r.room+'号室</span>'+
-        (r.caution ? '<span class="mnote">注意: '+r.caution+'</span>' : '')+
+        '<span class="rinfo"><span class="rname">'+esc(r.name)+'</span>'+
+        '<span class="rmeta">'+esc(r.kana||"")+' ・ '+esc(r.birth||"")+' ・ '+esc(r.room)+'号室</span>'+
+        dupHtml(r)+
+        (r.caution ? '<span class="mnote">注意: '+esc(r.caution)+'</span>' : '')+
+        ((r.extras&&r.extras.length) ? '<span class="mnote" style="color:var(--sub)">その他の用法 '+r.extras.length+'件</span>' : '')+
         refDotsHtml(r)+
         '</span>'+
-        '<span class="chevron"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span>';
+        CHEVRON;
       wrap.appendChild(row);
     });
   }
@@ -1351,15 +1914,18 @@
   window.openMasterDetail = openMasterDetail;
 
   function renderMdetail(){
-    var r = residents.find(function(x){ return x.id===mdetailId; });
+    var r = byId(mdetailId);
     if(!r) return;
     document.getElementById("mdetAvatar").textContent = r.initial;
     document.getElementById("mdetAvatar").style.background = r.color;
     document.getElementById("mdetName").textContent = r.name;
-    document.getElementById("mdetMeta").textContent = (r.kana?r.kana+" ・ ":"") + r.room + "号室";
+    document.getElementById("mdetMeta").textContent = (r.kana?r.kana+" ・ ":"") + (r.birth?r.birth+" ・ ":"") + r.room + "号室";
     var noteEl = document.getElementById("mdetNote");
-    noteEl.textContent = r.caution ? "注意: " + r.caution : "";
-    noteEl.style.display = r.caution ? "" : "none";
+    var notes = [];
+    if(r.caution) notes.push("注意: " + r.caution);
+    if(isDup(r)) notes.push("同姓同名あり");
+    noteEl.textContent = notes.join(" ・ ");
+    noteEl.style.display = notes.length ? "" : "none";
 
     var wrap = document.getElementById("refRows");
     wrap.innerHTML = "";
@@ -1389,7 +1955,7 @@
           return '<div class="sampleitem">'+
             '<div class="refthumb"><div class="pill"></div><div class="seam"></div></div>'+
             '<div class="sample-main">'+
-              '<div class="sample-meta">'+timingChip(ref.timing)+'<span class="sample-updated">登録日 '+esc(ref.updated)+'</span></div>'+
+              '<div class="sample-meta">'+timingChip(ref.timing)+srcNote(ref.source)+'<span class="sample-updated">登録日 '+esc(ref.updated)+'</span></div>'+
               '<div class="sample-note">'+esc(ref.note || "（メモなし）")+'</div>'+
             '</div>'+
             '<button class="sample-del" data-slot="'+sl+'" data-idx="'+idx+'">削除</button>'+
@@ -1402,6 +1968,9 @@
       var timingSeg = TIMING_ORDER.map(function(t, i){
         return '<button type="button" class="timingbtn" data-timing="'+t+'" aria-pressed="'+(i===1?"true":"false")+'">'+TIMINGS[t]+'</button>';
       }).join("");
+      var srcSeg = SOURCE_ORDER.map(function(t, i){
+        return '<button type="button" class="timingbtn sfsrc" data-source="'+t+'" aria-pressed="'+(i===0?"true":"false")+'">'+SOURCES[t]+'</button>';
+      }).join("");
 
       var body =
         '<div class="refrow-body'+(on?"":" hidden")+'">'+
@@ -1410,6 +1979,8 @@
           '<div class="shootform" data-slot="'+sl+'">'+
             '<div class="sflabel">服用のタイミング</div>'+
             '<div class="timingseg">'+timingSeg+'</div>'+
+            '<div class="sflabel">出所</div>'+
+            '<div class="timingseg sfsrcseg">'+srcSeg+'</div>'+
             '<div class="sflabel">メモ <span class="opt" style="font-weight:500">任意</span></div>'+
             '<input class="sf-note" type="text" placeholder="例：白い錠剤2・カプセル1">'+
             '<div class="shootform-actions">'+
@@ -1431,29 +2002,125 @@
       var form = row.querySelector(".shootform");
       row.querySelector(".btn-addshoot").onclick = function(){ form.classList.add("show"); };
       form.querySelector(".sf-cancel").onclick = function(){ form.classList.remove("show"); };
-      form.querySelectorAll(".timingbtn").forEach(function(tb){
-        tb.onclick = function(){
-          form.querySelectorAll(".timingbtn").forEach(function(x){ x.setAttribute("aria-pressed","false"); });
-          tb.setAttribute("aria-pressed","true");
-        };
+      form.querySelectorAll(".timingseg").forEach(function(seg){
+        seg.querySelectorAll(".timingbtn").forEach(function(tb){
+          tb.onclick = function(){
+            seg.querySelectorAll(".timingbtn").forEach(function(x){ x.setAttribute("aria-pressed","false"); });
+            tb.setAttribute("aria-pressed","true");
+          };
+        });
       });
       form.querySelector(".btn-shootgo").onclick = function(){
-        var timing = form.querySelector('.timingbtn[aria-pressed="true"]');
-        timing = timing ? timing.getAttribute("data-timing") : "after";
+        var t = form.querySelector('.timingseg:not(.sfsrcseg) .timingbtn[aria-pressed="true"]');
+        var timing = t ? t.getAttribute("data-timing") : "after";
+        var sEl = form.querySelector('.sfsrcseg .timingbtn[aria-pressed="true"]');
+        var source = sEl ? sEl.getAttribute("data-source") : "pharmacy";
         var note = form.querySelector(".sf-note").value.trim();
-        shootRef(r.id, sl, timing, note);
+        shootRef(r.id, sl, timing, note, source);
       };
 
       wrap.appendChild(row);
     });
+
+    renderExtraRows(r);
+  }
+
+  // ---------- Master detail: その他の用法 ----------
+  function renderExtraRows(r){
+    var wrap = document.getElementById("extraRows");
+    wrap.innerHTML = "";
+    if(!r.extras || r.extras.length===0){
+      wrap.innerHTML = '<div class="extra-empty">その他の用法は登録されていません</div>';
+    } else {
+      r.extras.forEach(function(ex, i){
+        var d = document.createElement("div");
+        d.className = "extraitem";
+        d.innerHTML =
+          '<div class="refthumb"><div class="pill"></div><div class="seam"></div></div>'+
+          '<div class="extra-main">'+
+            '<div class="extra-label">'+esc(ex.label)+'</div>'+
+            '<div class="extra-meta">'+kindChip(ex.kind)+(ex.time?'<span class="sample-updated">'+esc(ex.time)+'</span>':'')+srcNote(ex.source)+'<span class="sample-updated">登録日 '+esc(ex.updated||"—")+'</span></div>'+
+            '<div class="extra-note">'+esc(ex.note || "（メモなし）")+'</div>'+
+          '</div>'+
+          '<button class="sample-del" data-idx="'+i+'">削除</button>';
+        d.querySelector(".sample-del").onclick = function(){ deleteExtra(r.id, i); };
+        wrap.appendChild(d);
+      });
+    }
+    // form segments
+    var kseg = document.getElementById("exKindSeg");
+    kseg.innerHTML = KIND_ORDER.map(function(k,i){
+      return '<button type="button" class="timingbtn" data-kind="'+k+'" aria-pressed="'+(i===0?"true":"false")+'">'+KINDS[k]+'</button>';
+    }).join("");
+    kseg.querySelectorAll(".timingbtn").forEach(function(b){
+      b.onclick = function(){
+        kseg.querySelectorAll(".timingbtn").forEach(function(x){ x.setAttribute("aria-pressed","false"); });
+        b.setAttribute("aria-pressed","true");
+        var k = b.getAttribute("data-kind");
+        document.getElementById("exTimeWrap").style.display = (k==="timed"||k==="wake") ? "" : "none";
+      };
+    });
+    var sseg = document.getElementById("exSrcSeg");
+    sseg.innerHTML = SOURCE_ORDER.map(function(s,i){
+      return '<button type="button" class="timingbtn" data-source="'+s+'" aria-pressed="'+(i===0?"true":"false")+'">'+SOURCES[s]+'</button>';
+    }).join("");
+    sseg.querySelectorAll(".timingbtn").forEach(function(b){
+      b.onclick = function(){
+        sseg.querySelectorAll(".timingbtn").forEach(function(x){ x.setAttribute("aria-pressed","false"); });
+        b.setAttribute("aria-pressed","true");
+      };
+    });
+    document.getElementById("exTimeWrap").style.display = "none";
+  }
+
+  function toggleExtraForm(){
+    var f = document.getElementById("exForm");
+    var show = !f.classList.contains("show");
+    f.classList.toggle("show", show);
+    document.getElementById("exAddBtn").style.display = show ? "none" : "";
+    if(!show){ ["exLabel","exTime","exNote"].forEach(function(x){ document.getElementById(x).value=""; }); }
+  }
+  window.toggleExtraForm = toggleExtraForm;
+
+  function saveExtra(){
+    var label = document.getElementById("exLabel").value.trim();
+    if(!label){ showToast("用法のラベルを入力してください",""); return; }
+    var kEl = document.querySelector('#exKindSeg .timingbtn[aria-pressed="true"]');
+    var kind = kEl ? kEl.getAttribute("data-kind") : "prn";
+    var sEl = document.querySelector('#exSrcSeg .timingbtn[aria-pressed="true"]');
+    var source = sEl ? sEl.getAttribute("data-source") : "pharmacy";
+    var time = document.getElementById("exTime").value.trim();
+    var note = document.getElementById("exNote").value.trim();
+    var r = byId(mdetailId);
+    var ex = { label:label, kind:kind, note:note, source:source, updated:TODAY };
+    if((kind==="timed"||kind==="wake") && time) ex.time = time;
+    r.extras.push(ex);
+    toggleExtraForm();
+    renderMdetail();
+    showToast("用法を登録しました", r.name + " ・ " + label);
+  }
+  window.saveExtra = saveExtra;
+
+  function deleteExtra(id, idx){
+    var r = byId(id);
+    var label = (r.extras[idx]||{}).label || "";
+    r.extras.splice(idx,1);
+    // 記録側の index を詰める
+    DATES.forEach(function(d){
+      recordsByDate[d].extras = recordsByDate[d].extras.filter(function(e){ return !(e.residentId===id && e.extraIndex===idx); });
+      recordsByDate[d].extras.forEach(function(e){ if(e.residentId===id && e.extraIndex>idx) e.extraIndex--; });
+    });
+    records = recordsByDate[TODAY];
+    renderMdetail();
+    showToast("用法を削除しました", r.name + " ・ " + label);
   }
 
   function toggleSchedule(id, sl, on){
-    var r = residents.find(function(x){ return x.id===id; });
+    var r = byId(id);
     r.schedule[sl] = !!on;
     if(on){
       // create a pending record if none exists (見本データは保持済み)
-      if(!records[sl][id]) records[sl][id] = {state:"pending",staff:"",time:"",comment:"",hasPhoto:false,reason:""};
+      if(!records[sl][id]) records[sl][id] = {state:"pending",staff:"",time:"",comment:"",hasPhoto:false,reason:"",confirmed:[]};
     } else {
       // remove record so it disappears from lists/home/pharmacy (見本データは保持)
       delete records[sl][id];
@@ -1462,15 +2129,15 @@
     showToast(on ? "服薬ありに設定しました" : "服薬なしに設定しました", r.name + " ・ " + SLOTS[sl].name);
   }
 
-  function shootRef(id, sl, timing, note){
-    var r = residents.find(function(x){ return x.id===id; });
-    r.refMeds[sl].push({ timing:timing, note:note, updated:"7/3" });
+  function shootRef(id, sl, timing, note, source){
+    var r = byId(id);
+    r.refMeds[sl].push({ timing:timing, note:note, updated:TODAY, source:source||"pharmacy" });
     renderMdetail();
-    showToast("見本写真を登録しました", r.name + " ・ " + SLOTS[sl].name + " ・ " + TIMINGS[timing]);
+    showToast("見本写真を登録しました", r.name + " ・ " + SLOTS[sl].name + " ・ " + TIMINGS[timing] + " ・ " + SOURCES[source||"pharmacy"]);
   }
 
   function deleteRef(id, sl, idx){
-    var r = residents.find(function(x){ return x.id===id; });
+    var r = byId(id);
     if(r.refMeds[sl] && idx>=0 && idx<r.refMeds[sl].length){
       r.refMeds[sl].splice(idx, 1);
     }
@@ -1479,29 +2146,57 @@
   }
 
   // ---------- Pharmacy ----------
-  function flatRecords(){
-    var rows = [];
-    SLOT_ORDER.forEach(function(sl){
-      residents.forEach(function(r){
-        if(!hasSlot(r, sl)) return; // OFFの組合せは行として出さない
-        var st = getState(sl, r.id);
-        rows.push({ slot:sl, resident:r, st:st });
-      });
+  function timeVal(t){
+    if(!t) return 99999;
+    var p = String(t).split(":");
+    return (+p[0]||0)*60 + (+p[1]||0);
+  }
+  function datesInRange(){
+    var from = document.getElementById("fFrom").value;
+    var to = document.getElementById("fTo").value;
+    return DATES.filter(function(d){
+      var iso = DATE_ISO[d];
+      if(from && iso < from) return false;
+      if(to && iso > to) return false;
+      return true;
     });
-    return rows;
   }
 
-  function currentPharmaRows(){
-    var sel = document.getElementById("fSlot").value;
-    var rows = flatRecords().filter(function(x){ return sel==="all" ? true : x.slot===sel; });
-    // show recorded first (by time), pending after
-    rows.sort(function(a,b){
-      var ra = a.st.state==="pending"?1:0, rb = b.st.state==="pending"?1:0;
-      if(ra!==rb) return ra-rb;
-      if(a.slot!==b.slot) return SLOT_ORDER.indexOf(a.slot)-SLOT_ORDER.indexOf(b.slot);
-      return (a.st.time||"").localeCompare(b.st.time||"");
+  // 氏名ごとのブロック（施設・氏名・期間・時間帯フィルタ）
+  function pharmaGroups(){
+    var resSel = document.getElementById("fResident").value;
+    var slotSel = document.getElementById("fSlot").value;
+    var dates = datesInRange();
+    var out = [];
+    residents.forEach(function(r){
+      if(resSel!=="all" && String(r.id)!==resSel) return;
+      var rows = [];
+      dates.forEach(function(d){
+        SLOT_ORDER.forEach(function(sl){
+          if(slotSel!=="all" && slotSel!==sl) return;
+          if(!hasSlot(r, sl)) return;              // OFFの組合せは行として出さない
+          var st = recordsByDate[d][sl][r.id];
+          if(!st) return;
+          rows.push({ kind:"slot", date:d, slot:sl, resident:r, st:st });
+        });
+        if(slotSel==="all" || slotSel==="extra"){
+          (recordsByDate[d].extras||[]).forEach(function(e){
+            if(e.residentId!==r.id) return;
+            var ex = (r.extras||[])[e.extraIndex];
+            if(!ex) return;
+            rows.push({ kind:"extra", date:d, slot:null, extra:ex, resident:r,
+              st:{ state:"taken", staff:e.staff, time:e.time, comment:e.comment, hasPhoto:!!e.hasPhoto, reason:"", confirmed:[] } });
+          });
+        }
+      });
+      rows.sort(function(a,b){
+        var da = DATES.indexOf(a.date), db = DATES.indexOf(b.date);
+        if(da!==db) return da-db;
+        return timeVal(a.st.time) - timeVal(b.st.time);
+      });
+      if(rows.length) out.push({ resident:r, rows:rows });
     });
-    return rows;
+    return out;
   }
 
   function stateLabel(s){
@@ -1509,37 +2204,104 @@
   }
   function stateChip(s, reason){
     if(s==="taken") return '<span class="chip done">服薬済</span>';
-    if(s==="refused") return '<span class="chip refu">'+(reason||"拒否")+'</span>';
+    if(s==="refused") return '<span class="chip refu">'+esc(reason||"拒否")+'</span>';
     return '<span class="chip pend">未実施</span>';
   }
 
+  // 「確認した見本」セル
+  function confirmedCell(x){
+    if(x.kind==="extra"){
+      return '<span class="ok">'+CHECK_SVG+'</span> ' + esc(x.extra.note || x.extra.label);
+    }
+    var arr = x.resident.refMeds[x.slot] || [];
+    if(arr.length===0) return '<span style="color:#B7C3C0">見本なし</span>';
+    if(x.st.state!=="taken") return '<span style="color:#B7C3C0">—</span>';
+    var conf = x.st.confirmed || [];
+    return arr.map(function(ref, i){
+      var ok = conf.indexOf(i) >= 0;
+      return (ok ? '<span class="ok">' : '<span class="ng">') + TIMINGS[ref.timing||"none"] + '</span> ' +
+             esc(ref.note) + ' ' +
+             (ok ? '<span class="ok">'+CHECK_SVG+'</span>' : '<span class="ng">未確認</span>');
+    }).join('<br>');
+  }
+  // コピー用テキスト
+  function confirmedText(x){
+    if(x.kind==="extra") return "（" + (x.extra.note || x.extra.label) + " 済）";
+    var arr = x.resident.refMeds[x.slot] || [];
+    if(arr.length===0 || x.st.state!=="taken") return "";
+    var conf = x.st.confirmed || [];
+    return "（" + arr.map(function(ref,i){
+      return TIMINGS[ref.timing||"none"] + " " + ref.note + " " + (conf.indexOf(i)>=0 ? "済" : "未確認");
+    }).join("・") + "）";
+  }
+
+  function syncSelects(){
+    var sel = document.getElementById("fResident");
+    var cur = sel.value || "all";
+    sel.innerHTML = '<option value="all">すべて</option>' + residents.map(function(r){
+      return '<option value="'+r.id+'">'+esc(r.name)+'（'+esc(r.room)+'）</option>';
+    }).join("");
+    sel.value = residents.some(function(r){ return String(r.id)===cur; }) ? cur : "all";
+
+    var nt = document.getElementById("nTarget");
+    var ncur = nt.value || "all";
+    nt.innerHTML = '<option value="all">施設全体</option>' + residents.map(function(r){
+      return '<option value="'+r.id+'">'+esc(r.name)+'（'+esc(r.room)+'）</option>';
+    }).join("");
+    nt.value = residents.some(function(r){ return String(r.id)===ncur; }) ? ncur : "all";
+  }
+
   function renderPharma(){
-    var rows = currentPharmaRows();
+    syncSelects();
+    renderSentList();
+    var groups = pharmaGroups();
     var body = document.getElementById("pharmaBody");
     body.innerHTML = "";
-    rows.forEach(function(x, i){
-      var r = x.resident, st = x.st, s = SLOTS[x.slot];
-      var tr = document.createElement("tr");
-      if(st.state==="refused") tr.className = "stripe-refu";
-      else if(st.state==="pending") tr.className = "stripe-pend";
-      tr.onclick = function(){ openDetail(x); };
-      tr.innerHTML =
-        '<td class="time">'+(st.time||"—")+'</td>'+
-        '<td><span class="rname-cell"><span class="avatar" style="background:'+r.color+'">'+r.initial+'</span>'+r.name+' <span style="color:var(--sub);font-size:12.5px">'+r.room+'</span></span></td>'+
-        '<td><span class="slot-tag" style="color:'+s.color+'">'+s.name+'</span></td>'+
-        '<td>'+stateChip(st.state, st.reason)+'</td>'+
-        '<td>'+(st.staff||"—")+'</td>'+
-        '<td class="cmt-cell">'+(st.comment||'<span style="color:#B7C3C0">—</span>')+'</td>'+
-        '<td>'+(st.hasPhoto ? '<span class="photo-yes"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3"/></svg>あり</span>' : '<span class="photo-no">なし</span>')+'</td>';
-      body.appendChild(tr);
+    var flat = [];
+    groups.forEach(function(g){
+      var r = g.resident;
+      var head = document.createElement("tr");
+      head.className = "pnamerow";
+      head.innerHTML = '<td colspan="7"><div class="pname">'+
+        '<span class="avatar" style="background:'+r.color+';width:26px;height:26px;font-size:12px">'+r.initial+'</span>'+
+        esc(r.name)+
+        '<span class="pmeta">'+esc(r.room)+'号室 ・ '+esc(r.birth||"—")+'</span>'+
+        (isDup(r) ? '<span class="pmeta" style="color:var(--amber);font-weight:700">同姓同名あり</span>' : '')+
+        '<span class="pmeta">'+g.rows.length+'件</span>'+
+      '</div></td>';
+      body.appendChild(head);
+
+      g.rows.forEach(function(x){
+        flat.push(x);
+        var st = x.st;
+        var tr = document.createElement("tr");
+        if(st.state==="refused") tr.className = "stripe-refu";
+        else if(st.state==="pending") tr.className = "stripe-pend";
+        tr.onclick = function(){ openDetail(x); };
+        var slotCell = x.kind==="extra"
+          ? '<span class="slot-tag" style="color:var(--sub)">'+esc(KINDS[x.extra.kind]||"その他")+'</span>'
+          : '<span class="slot-tag" style="color:'+SLOTS[x.slot].color+'">'+SLOTS[x.slot].name+'</span>';
+        var stateCell = x.kind==="extra" ? '<span class="chip done">使用</span>' : stateChip(st.state, st.reason);
+        tr.innerHTML =
+          '<td class="time">'+esc(x.date)+(st.time ? ' '+esc(st.time) : ' —')+'</td>'+
+          '<td>'+slotCell+'</td>'+
+          '<td>'+stateCell+'</td>'+
+          '<td class="confirmcell">'+confirmedCell(x)+'</td>'+
+          '<td>'+esc(st.staff||"—")+'</td>'+
+          '<td class="cmt-cell">'+(st.comment ? esc(st.comment) : '<span style="color:#B7C3C0">—</span>')+'</td>'+
+          '<td>'+(st.hasPhoto ? '<span class="photo-yes"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3"/></svg>あり</span>' : '<span class="photo-no">なし</span>')+'</td>';
+        body.appendChild(tr);
+      });
     });
-    renderSummary(rows);
+    document.getElementById("pharmaEmpty").style.display = groups.length ? "none" : "";
+    renderSummary(flat);
   }
   window.renderPharma = renderPharma;
 
   function renderSummary(rows){
-    var taken=0, refused=0, total=rows.length, pending=0;
+    var taken=0, refused=0, pending=0;
     rows.forEach(function(x){
+      if(x.kind==="extra") return;   // その他用法は服薬率に含めない
       if(x.st.state==="taken") taken++;
       else if(x.st.state==="refused") refused++;
       else pending++;
@@ -1554,32 +2316,65 @@
       '<div class="stat"><div class="n">'+pending+'</div><div class="l">未実施</div></div>';
   }
 
+  // ---------- 薬局 → 施設への連絡 ----------
+  function sendNotice(){
+    var text = document.getElementById("nText").value.trim();
+    if(!text){ showToast("連絡内容を入力してください",""); return; }
+    var tv = document.getElementById("nTarget").value;
+    var target = tv==="all" ? "all" : +tv;
+    notices.unshift({ id:++noticeSeq, target:target, text:text, date:TODAY, author:"薬局 田村", readBy:[] });
+    document.getElementById("nText").value = "";
+    renderSentList();
+    showToast("送信しました", "宛先: " + (target==="all" ? "施設全体" : byId(target).name + "さん"));
+  }
+  window.sendNotice = sendNotice;
+
+  function renderSentList(){
+    var el = document.getElementById("sentList");
+    if(notices.length===0){ el.innerHTML = ""; return; }
+    el.innerHTML = notices.map(function(n){
+      var read = isRead(n);
+      var status = read
+        ? '<div class="sread rd">既読 '+esc(n.readBy[0].staff)+' '+esc(n.readBy[0].at)+'</div>'
+        : '<div class="sread un">未読</div>';
+      return '<div class="sentitem">'+
+        '<div class="sto">'+esc(noticeTargetLabel(n))+' ・ '+esc(n.date)+'</div>'+
+        '<div class="stext">'+esc(n.text)+'</div>'+
+        status+
+      '</div>';
+    }).join("");
+  }
+
   // ---------- Detail modal ----------
-  var WEEK = ["日","月","火","水","木","金","土"];
-  function fmtDate(){
-    var v = document.getElementById("fDate").value; // yyyy-mm-dd
-    var parts = v.split("-");
-    if(parts.length!==3) return v;
-    var d = new Date(+parts[0], +parts[1]-1, +parts[2]);
-    return (+parts[1]) + "/" + (+parts[2]) + "(" + WEEK[d.getDay()] + ")";
+  function fmtDate(key){
+    var iso = DATE_ISO[key];
+    if(!iso) return key;
+    var p = iso.split("-");
+    var d = new Date(+p[0], +p[1]-1, +p[2]);
+    return (+p[1]) + "/" + (+p[2]) + "(" + WEEK[d.getDay()] + ")";
   }
 
   function openDetail(x){
-    var r = x.resident, st = x.st, s = SLOTS[x.slot];
+    var r = x.resident, st = x.st;
     document.getElementById("mdAvatar").textContent = r.initial;
     document.getElementById("mdAvatar").style.background = r.color;
     document.getElementById("mdName").textContent = r.name;
-    document.getElementById("mdMeta").textContent = r.room + "号室" + (r.kana?" ・ "+r.kana:"");
+    document.getElementById("mdMeta").textContent = r.room + "号室 ・ " + (r.birth||"—") + (r.kana?" ・ "+r.kana:"");
     var dl = document.getElementById("mdDl");
-    var rows = [
-      ["日付", fmtDate()],
-      ["時間帯", '<span style="color:'+s.color+';font-weight:700">'+s.name+'</span> ('+s.time+')'],
-      ["状態", stateChip(st.state, st.reason)],
-      ["時刻", st.time || "—"],
-      ["実施者", st.staff || "—"]
-    ];
+    var rows = [["日付", fmtDate(x.date)]];
+    if(x.kind==="extra"){
+      rows.push(["用法", esc(x.extra.label) + " " + kindChip(x.extra.kind)]);
+      rows.push(["状態", '<span class="chip done">使用</span>']);
+    } else {
+      var s = SLOTS[x.slot];
+      rows.push(["時間帯", '<span style="color:'+s.color+';font-weight:700">'+s.name+'</span> ('+s.time+')']);
+      rows.push(["状態", stateChip(st.state, st.reason)]);
+    }
+    rows.push(["時刻", st.time || "—"]);
+    rows.push(["実施者", st.staff || "—"]);
     if(st.state==="refused") rows.push(["理由", st.reason||"—"]);
-    rows.push(["コメント", st.comment ? st.comment : '<span style="color:#B7C3C0">記載なし</span>']);
+    rows.push(["確認した見本", confirmedList(x)]);
+    rows.push(["コメント", st.comment ? esc(st.comment) : '<span style="color:#B7C3C0">記載なし</span>']);
     dl.innerHTML = rows.map(function(row){ return '<dt>'+row[0]+'</dt><dd>'+row[1]+'</dd>'; }).join("");
 
     var ph = document.getElementById("mdPhoto");
@@ -1591,31 +2386,58 @@
     document.getElementById("overlay").classList.add("show");
   }
 
+  // モーダル用：確認した見本 一覧（食前 胃薬1包 ✓ / 食後 錠剤2 ✓）
+  function confirmedList(x){
+    if(x.kind==="extra"){
+      return '<ul class="mdlist"><li><span class="ok">'+CHECK_SVG+'</span><span>'+esc(x.extra.note || x.extra.label)+'</span></li></ul>';
+    }
+    var arr = x.resident.refMeds[x.slot] || [];
+    if(arr.length===0) return '<span style="color:#B7C3C0">見本の登録なし</span>';
+    if(x.st.state!=="taken") return '<span style="color:#B7C3C0">—</span>';
+    var conf = x.st.confirmed || [];
+    return '<ul class="mdlist">' + arr.map(function(ref,i){
+      var ok = conf.indexOf(i) >= 0;
+      return '<li>'+
+        (ok ? '<span class="ok">'+CHECK_SVG+'</span>' : '<span class="ng">未</span>')+
+        '<span>'+TIMINGS[ref.timing||"none"]+' '+esc(ref.note)+'</span>'+
+      '</li>';
+    }).join("") + '</ul>';
+  }
+
   function closeModal(){ document.getElementById("overlay").classList.remove("show"); }
   window.closeModal = closeModal;
   document.addEventListener("keydown", function(e){ if(e.key==="Escape") closeModal(); });
 
-  // ---------- Copy records ----------
+  // ---------- Copy records（氏名ごとに1ブロック） ----------
   function copyRecords(){
-    var rows = currentPharmaRows();
-    var date = fmtDate();
-    var lines = rows.map(function(x){
-      var r = x.resident, st = x.st, s = SLOTS[x.slot];
-      var stateTxt = stateLabel(st.state);
-      var line = date + " " + s.name + " " + r.name.replace(/\s/g,"") + ": " + stateTxt;
-      if(st.time) line += " " + st.time;
-      if(st.staff) line += " 実施:" + st.staff;
-      if(st.state==="refused" && st.reason) line += " 理由:" + st.reason;
-      if(st.comment) line += " コメント:" + st.comment;
-      return line;
+    var groups = pharmaGroups();
+    var blocks = groups.map(function(g){
+      var r = g.resident;
+      var head = "■" + plainName(r.name) + "（" + r.room + "・" + (r.birth||"—") + "）";
+      var lines = g.rows.map(function(x){
+        var st = x.st;
+        var label = x.kind==="extra" ? x.extra.label : SLOTS[x.slot].name;
+        var stateTxt = x.kind==="extra" ? "使用" : stateLabel(st.state);
+        var line = x.date + " " + label + " " + stateTxt;
+        if(st.time) line += " " + st.time;
+        if(st.staff) line += " 実施:" + st.staff;
+        if(x.kind!=="extra" && st.state==="refused" && st.reason) line += " 理由:" + st.reason;
+        var conf = confirmedText(x);
+        if(conf) line += conf;
+        if(st.comment) line += " コメント:" + st.comment;
+        return line;
+      });
+      return head + "\n" + lines.join("\n");
     });
-    var text = lines.join("\n");
-    function done(){ showToast("コピーしました", rows.length + "件の記録をコピー"); }
+    var count = groups.reduce(function(a,g){ return a + g.rows.length; }, 0);
+    var text = blocks.join("\n\n");
+    function done(){ showToast("コピーしました", groups.length + "名 ・ " + count + "件の記録をコピー"); }
     if(navigator.clipboard && navigator.clipboard.writeText){
       navigator.clipboard.writeText(text).then(done, function(){ fallbackCopy(text); done(); });
     } else {
       fallbackCopy(text); done();
     }
+    return text;
   }
   window.copyRecords = copyRecords;
 
@@ -1633,7 +2455,7 @@
   var toastTimer;
   function showToast(msg, meta){
     var t = document.getElementById("toast");
-    t.innerHTML = '<span class="check"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span>'+msg+(meta?' <span class="meta">'+meta+'</span>':'')+'</span>';
+    t.innerHTML = '<span class="check"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span>'+esc(msg)+(meta?' <span class="meta">'+esc(meta)+'</span>':'')+'</span>';
     t.classList.add("show");
     clearTimeout(toastTimer);
     toastTimer = setTimeout(function(){ t.classList.remove("show"); }, 3200);
